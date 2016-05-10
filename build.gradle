@@ -1,0 +1,19 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+
+repositories {
+    mavenCentral()
+    maven { url "http://central.maven.org/maven2" }
+}
+
+dependencies {
+    compile 'org.springframework:spring-jdbc:4.2.2.RELEASE'
+    testCompile 'junit:junit:4.11'
+}
