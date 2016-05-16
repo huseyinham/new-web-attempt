@@ -3,10 +3,15 @@ buildscript {
         mavenCentral()
         jcenter()
     }
+    dependencies {
+        classpath 'org.flywaydb:flyway-gradle-plugin:4.0'
+    }
+
 }
 
 apply plugin: 'java'
 apply plugin: 'idea'
+apply plugin: 'org.flywaydb.flyway'
 
 repositories {
     mavenCentral()
@@ -15,5 +20,15 @@ repositories {
 
 dependencies {
     compile 'org.springframework:spring-jdbc:4.2.2.RELEASE'
+    compile 'mysql:mysql-connector-java:5.1.37'
     testCompile 'junit:junit:4.11'
+}
+
+Properties jdbcProperties = new Properties()
+jdbcProperties.load(new FileInputStream('src/main/resources/jdbc.properties'))
+
+flyway {
+    url = jdbcProperties.getProperty('jdbc.url')
+    user = jdbcProperties.getProperty('jdbc.username')
+    password = jdbcProperties.getProperty('jdbc.password')
 }
