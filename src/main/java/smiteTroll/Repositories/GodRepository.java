@@ -3,9 +3,7 @@ package smiteTroll.Repositories;
 import smiteTroll.Classes.God;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.sql.*;
-import java.util.Properties;
 
 public class GodRepository {
 
@@ -14,21 +12,17 @@ public class GodRepository {
         Statement stmt = null;
 
         try {
-            Properties prop = new Properties();
-            InputStream in = getClass().getResourceAsStream("/jdbc.properties");
-            prop.load(in);
-            in.close();
-            String JDBC_DRIVER = prop.getProperty("jdbc.driver");
-            String JDBC_URL = prop.getProperty("jdbc.url");
-            String JDBC_USERNAME = prop.getProperty("jdbc.username");
-            String JDBC_PASSWORD = prop.getProperty("jdbc.password");
-
-            Class.forName(JDBC_DRIVER);
-            con = DriverManager.getConnection(JDBC_URL, JDBC_USERNAME, JDBC_PASSWORD);
+            ConnectionCreator connectionCreator = new ConnectionCreator();
+            con = connectionCreator.getConnection();
             stmt = con.createStatement();
-            String query = "SELECT * FROM god ORDER BY RAND() LIMIT 1";
-
-            ResultSet rs = stmt.executeQuery(query);
+            PreparedStatement prepStmt = null;
+            if(1 == 1){ //clicked reroll button - then enter this SQL query else perform original
+                prepStmt = con.prepareStatement("SELECT * FROM god WHERE god_name != ? ORDER BY RAND() LIMIT 1");
+                prepStmt.setString(1, godName);
+            } else {
+                prepStmt = con.prepareStatement("SELECT * FROM god ORDER BY RAND() LIMIT 1");
+            }
+            ResultSet rs = prepStmt.executeQuery();
             rs.next();
             String godName = rs.getString("god_name");
             String godType = rs.getString("god_type");
@@ -42,5 +36,11 @@ public class GodRepository {
                 con.close();
             }
         }
+    }
+
+    public God reRoll(){
+
+
+        return God;
     }
 }

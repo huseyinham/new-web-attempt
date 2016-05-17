@@ -1,7 +1,9 @@
 INSERT INTO type
 VALUES  ('physical'),
         ('neutral'),
-        ('magical');
+        ('magical'),
+        ('physical_boots'),
+        ('magical_boots');
 
 INSERT INTO god (god_name, god_type)
 VALUES  ('Agni', 'magical'),
@@ -81,14 +83,14 @@ VALUES  ('Agni', 'magical'),
         ('Zhong Kui', 'magical');
 
 INSERT INTO item (item_name, item_type)
-VALUES  ('Reinforced Greaves', 'physical'),
-        ('Travelers Shoes', 'magical'),
-        ('Reinforced Shoes', 'magical'),
-        ('Ninja Tabi', 'physical'),
-        ('Shoes of Focus', 'magical'),
-        ('Talaria Boots', 'physical'),
-        ('Warriar Tabi', 'physical'),
-        ('Shoes of the Magi', 'magical'),
+VALUES  ('Reinforced Greaves', 'physical_boots'),
+        ('Travelers Shoes', 'magical_boots'),
+        ('Reinforced Shoes', 'magical_boots'),
+        ('Ninja Tabi', 'physical_boots'),
+        ('Shoes of Focus', 'magical_boots'),
+        ('Talaria Boots', 'physical_boots'),
+        ('Warriar Tabi', 'physical_boots'),
+        ('Shoes of the Magi', 'magical_boots'),
         ('Heartseeker', 'physical'),
         ('Shield of Regrowth', 'physical'),
         ('Divine Ruin', 'magical'),
@@ -156,3 +158,17 @@ VALUES  ('Reinforced Greaves', 'physical'),
         ('Deathbringer', 'physical'),
         ('Rod of Tahuti', 'magical'),
         ('Spear of Desolation', 'magical');
+
+INSERT INTO relic (relic_name)
+VALUES  ('Blink'),
+        ('Curse'),
+        ('Frenzy'),
+        ('Meditation'),
+        ('Purification'),
+        ('Sanctuary'),
+        ('Scout'),
+        ('Shell'),
+        ('Sprint'),
+        ('Sunder'),
+        ('Teleport'),
+        ('Wrath');
