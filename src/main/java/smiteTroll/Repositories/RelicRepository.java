@@ -27,45 +27,50 @@ public class RelicRepository {
                 String relicName = rs.getString("relic_name");
                 relicList.add(new Relic(relicName));
             }
-
             return relicList;
 
         } finally {
-            if (stmt != null) {
-                stmt.close();
-            }
-            if (con != null) {
-                con.close();
-            }
+            close(stmt);
+            close(con);
         }
     }
 
-  /*  public Relic reRollRelic(Relic rerolledRelic) throws SQLException, ClassNotFoundException, IOException {
+    public Relic reRollRelic(Relic rerolledRelic) throws SQLException, ClassNotFoundException, IOException {
         Connection con = null;
         PreparedStatement prepStmt = null;
 
         try {
             con = connectionCreator.getConnection();
 
-            List<Relic> relicList = new ArrayList<>();
-            prepstmt = con.createStatement();
-            String query = "SELECT * FROM relic ORDER BY RAND() LIMIT 2";
+            prepStmt = con.prepareStatement("SELECT * FROM relic WHERE relic_name != ? ORDER BY RAND() LIMIT 1");
+            prepStmt.setString(1, rerolledRelic.getRelicName());
 
-            ResultSet rs = stmt.executeQuery(query);
-            while(rs.next()){
-                String relicName = rs.getString("relic_name");
-                relicList.add(new Relic(relicName));
-            }
-
-            return relicList;
+            ResultSet rs = prepStmt.executeQuery();
+            rs.next();
+            String relicName = rs.getString("relic_name");
+            return new Relic(relicName);
 
         } finally {
-            if (stmt != null) {
-                stmt.close();
-            }
-            if (con != null) {
-                con.close();
-            }
+            close(prepStmt);
+            close(con);
         }
-    }*/
+    }
+
+    private void close(Statement stmt) throws SQLException {
+        if (stmt != null) {
+            stmt.close();
+        }
+    }
+
+    private void close(PreparedStatement prepStmt) throws SQLException {
+        if (prepStmt != null) {
+            prepStmt.close();
+        }
+    }
+
+    private void close(Connection con) throws SQLException {
+        if (con != null) {
+            con.close();
+        }
+    }
 }

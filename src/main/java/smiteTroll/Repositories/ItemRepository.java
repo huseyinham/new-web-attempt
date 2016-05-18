@@ -59,9 +59,13 @@ public class ItemRepository {
         PreparedStatement prepStmt = null;
         try {
             con = connectionCreator.getConnection();
-            prepStmt = con.prepareStatement("SELECT * FROM item WHERE item_type = ? AND item_name != ? ORDER BY RAND() LIMIT 1");
+            prepStmt = con.prepareStatement("SELECT * FROM item WHERE item_type = ? AND item_name != ? AND item_name != ? AND item_name != ? AND item_name != ? AND item_name != ? AND item_name != ? ORDER BY RAND() LIMIT 1");
             prepStmt.setString(1, rerolledItem.getItemType());
-            prepStmt.setString(2, rerolledItem.getItemName());
+            int i = 2;
+            for(Item item : alreadySelectedItems){
+                prepStmt.setString(i, item.getItemName());
+                i++;
+            }
             ResultSet rs = prepStmt.executeQuery();
             rs.next();
             return toItem(rs);

@@ -18,7 +18,7 @@ public class GodRepositoryTest {
     @Test
     public void testPreviousGodNotReselected() throws SQLException, IOException, ClassNotFoundException {
         God selectedGod = godRepo.reRoll(previousGod);
-        Assert.assertTrue(!selectedGod.getGodName().contains(previousGod.getGodName()));
+        Assert.assertTrue(!selectedGod.getGodName().equals(previousGod.getGodName()));
     }
 
     @Test

@@ -28,7 +28,7 @@ public class ItemRepositoryTest {
         List<Item> itemList = itemRepo.getItems("magical");
         Item reRolledItem = itemList.get(0);
         Item newItem = itemRepo.reRoll(reRolledItem, itemList);
-        Assert.assertTrue(!newItem.getItemName().contains(reRolledItem.getItemName()));
+        Assert.assertTrue(!newItem.getItemName().equals(reRolledItem.getItemName()));
         Assert.assertTrue(newItem.getItemType().equals(reRolledItem.getItemType()));
     }
 
@@ -37,10 +37,10 @@ public class ItemRepositoryTest {
         List<Item> itemList = itemRepo.getItems("magical");
         Item reRolledItem = itemList.get(1);
         Item newItem = itemRepo.reRoll(reRolledItem, itemList);
-        Assert.assertTrue(!newItem.getItemName().contains(reRolledItem.getItemName()));
+        Assert.assertTrue(!newItem.getItemName().equals(reRolledItem.getItemName()));
         Assert.assertTrue(newItem.getItemType().equals(reRolledItem.getItemType()));
         for(Item item : itemList){
-            Assert.assertTrue(!newItem.getItemName().contains(item.getItemName()));
+            Assert.assertTrue(!newItem.getItemName().equals(item.getItemName()));
         }
     }
 
