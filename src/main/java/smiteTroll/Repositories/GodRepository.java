@@ -19,17 +19,11 @@ public class GodRepository {
             String query = "SELECT * FROM god ORDER BY RAND() LIMIT 1";
             ResultSet rs = stmt.executeQuery(query);
             rs.next();
-            String godName = rs.getString("god_name");
-            String godType = rs.getString("god_type");
-            return new God(godName, godType);
+            return toGod(rs);
 
         } finally {
-            if (stmt != null) {
-                stmt.close();
-            }
-            if (con != null) {
-                con.close();
-            }
+            close(stmt);
+            close(con);
         }
     }
 
@@ -43,17 +37,35 @@ public class GodRepository {
             prepStmt.setString(1, previousGod.getGodName());
             ResultSet rs = prepStmt.executeQuery();
             rs.next();
-            String godName = rs.getString("god_name");
-            String godType = rs.getString("god_type");
-            return new God(godName, godType);
+            return toGod(rs);
 
         } finally {
-            if (prepStmt != null) {
-                prepStmt.close();
-            }
-            if (con != null) {
-                con.close();
-            }
+            close(prepStmt);
+            close(con);
+        }
+    }
+
+    private God toGod(ResultSet rs) throws SQLException {
+        String godName = rs.getString("god_name");
+        String godType = rs.getString("god_type");
+        return new God(godName, godType);
+    }
+
+    private void close(Statement stmt) throws SQLException {
+        if (stmt != null) {
+            stmt.close();
+        }
+    }
+
+    private void close(PreparedStatement prepStmt) throws SQLException {
+        if (prepStmt != null) {
+            prepStmt.close();
+        }
+    }
+
+    private void close(Connection con) throws SQLException {
+        if (con != null) {
+            con.close();
         }
     }
 }

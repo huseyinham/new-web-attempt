@@ -54,6 +54,23 @@ public class ItemRepository {
         }
     }
 
+    public Item reRoll(Item rerolledItem, List<Item> alreadySelectedItems) throws SQLException, IOException, ClassNotFoundException {
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        try {
+            con = connectionCreator.getConnection();
+            prepStmt = con.prepareStatement("SELECT * FROM item WHERE item_type = ? AND item_name != ? ORDER BY RAND() LIMIT 1");
+            prepStmt.setString(1, rerolledItem.getItemType());
+            prepStmt.setString(2, rerolledItem.getItemName());
+            ResultSet rs = prepStmt.executeQuery();
+            rs.next();
+            return toItem(rs);
+        } finally {
+            close(prepStmt);
+            close(con);
+        }
+    }
+
     private Item toItem(ResultSet rs) throws SQLException {
         String itemName = rs.getString("item_name");
         String itemType = rs.getString("item_type");

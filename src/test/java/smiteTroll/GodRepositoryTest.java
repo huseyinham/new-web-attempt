@@ -12,18 +12,26 @@ import java.util.List;
 
 public class GodRepositoryTest {
 
+    private GodRepository godRepo = new GodRepository();
+    private God previousGod = new God("Thanatos", "physical");
+
     @Test
-    public void testRerollFunctionality() throws SQLException, IOException, ClassNotFoundException {
-        GodRepository godRepo = new GodRepository();
-        God previousGod = new God("Thanatos", "physical");
+    public void testPreviousGodNotReselected() throws SQLException, IOException, ClassNotFoundException {
+        God selectedGod = godRepo.reRoll(previousGod);
+        Assert.assertTrue(!selectedGod.getGodName().contains(previousGod.getGodName()));
+    }
+
+    @Test
+    public void testSelectedGodIsInTheList() throws SQLException, IOException, ClassNotFoundException {
         God selectedGod = godRepo.reRoll(previousGod);
         List<God> listOfGods = getPotentialRerollableGods();
+        Boolean found = false;
         for (God god : listOfGods) {
-            System.out.println(selectedGod.getGodName());
-            System.out.println(god.getGodName());
-            //Assert.assertTrue(selectedGod.getGodName().contains(god.getGodName()));
-            //Assert.assertTrue(!selectedGod.getGodName().contains(previousGod.getGodName));
+            if (selectedGod.getGodName().equals(god.getGodName())) {
+                found = true;
+            }
         }
+        Assert.assertTrue(found);
     }
 
     private List<God> getPotentialRerollableGods() {
