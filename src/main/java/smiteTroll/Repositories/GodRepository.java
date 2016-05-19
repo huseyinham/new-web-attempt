@@ -33,8 +33,9 @@ public class GodRepository {
 
         try {
             con = connectionCreator.getConnection();
-            prepStmt = con.prepareStatement("SELECT * FROM god WHERE god_name != ? ORDER BY RAND() LIMIT 1");
+            prepStmt = con.prepareStatement("SELECT * FROM god WHERE god_name != ? AND god_type = ? ORDER BY RAND() LIMIT 1");
             prepStmt.setString(1, previousGod.getGodName());
+            prepStmt.setString(2, previousGod.getGodType());
             ResultSet rs = prepStmt.executeQuery();
             rs.next();
             return toGod(rs);

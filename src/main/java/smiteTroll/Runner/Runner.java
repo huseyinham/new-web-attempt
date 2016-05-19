@@ -15,11 +15,11 @@ public class Runner {
 
     public static void main(String args[]) throws SQLException, ClassNotFoundException, IOException {
         GodRepository godRepo = new GodRepository();
-        God result = godRepo.getNewGod();
-        System.out.println(result.getGodName() + "\t" + result.getGodType() + "\n");
+        God godResult = godRepo.getNewGod();
+        System.out.println(godResult.getGodName() + "\t" + godResult.getGodType() + "\n");
 
         ItemRepository itemRepo = new ItemRepository();
-        List<Item> itemResult = itemRepo.getItems(result.getGodType());
+        List<Item> itemResult = itemRepo.getItems(godResult.getGodType());
         for(Item item : itemResult){
             System.out.println(item.getItemName() + "\t" + item.getItemType());
         }

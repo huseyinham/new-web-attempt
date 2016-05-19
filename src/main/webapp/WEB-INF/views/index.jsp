@@ -25,5 +25,14 @@ ${godName}
 </c:forEach>
 </ul>
 
+<form action="godReroll" method="POST">
+<input type="submit" value="Reroll God" />
+</form>
+
+<form action="relicReroll" method="POST">
+<input type="submit" value="Reroll Relics" />
+</form>
+
+
 </body>
 </html>
