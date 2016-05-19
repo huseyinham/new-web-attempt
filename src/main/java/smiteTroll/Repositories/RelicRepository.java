@@ -11,7 +11,7 @@ public class RelicRepository {
 
     private ConnectionCreator connectionCreator = new ConnectionCreator();
 
-    public List<Relic> getRelic() throws SQLException, ClassNotFoundException, IOException {
+    public List<Relic> getRelics() throws SQLException, ClassNotFoundException, IOException {
         Connection con = null;
         Statement stmt = null;
 

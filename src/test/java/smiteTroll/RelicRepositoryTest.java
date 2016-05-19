@@ -17,7 +17,7 @@ public class RelicRepositoryTest {
 
     @Test
     public void testingOnlyTwoRelicsAreReturned() throws SQLException, IOException, ClassNotFoundException {
-        List<Relic> relicList = relicRepo.getRelic();
+        List<Relic> relicList = relicRepo.getRelics();
         Assert.assertEquals(2, relicList.size());
         Assert.assertTrue(RELIC_NAMES.contains(relicList.get(0).getRelicName()));
         Assert.assertTrue(RELIC_NAMES.contains(relicList.get(1).getRelicName()));

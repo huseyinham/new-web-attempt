@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import smiteTroll.Classes.God;
 import smiteTroll.Classes.Item;
+import smiteTroll.Classes.Relic;
 import smiteTroll.Repositories.GodRepository;
 import smiteTroll.Repositories.ItemRepository;
 import smiteTroll.Repositories.RelicRepository;
@@ -23,6 +24,7 @@ public class IndexController {
     private GodRepository godRepository;
     @Autowired
     private ItemRepository itemRepository;
+    @Autowired
     private RelicRepository relicRepository;
 
     @RequestMapping("/")
@@ -31,10 +33,11 @@ public class IndexController {
         m.addAttribute("godName", god.getGodName());
 
         List<Item> items = itemRepository.getItems(god.getGodType());
-        for (Item item : items) {
-            m.addAttribute("itemNames", item.getItemName());
-        }
-        //m.addAttribute("godName", god.getGodName());
+        m.addAttribute("items", items);
+
+        List<Relic> relics = relicRepository.getRelics();
+        m.addAttribute("relics", relics);
+
         return "index";
     }
 

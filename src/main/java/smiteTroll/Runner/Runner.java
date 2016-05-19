@@ -27,7 +27,7 @@ public class Runner {
         System.out.print("\n");
 
         RelicRepository relicRepo = new RelicRepository();
-        List<Relic> relicResult = relicRepo.getRelic();
+        List<Relic> relicResult = relicRepo.getRelics();
         for(Relic relic : relicResult){
             System.out.println(relic.getRelicName());
         }
