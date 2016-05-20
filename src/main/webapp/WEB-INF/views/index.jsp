@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
+    <link rel="stylesheet" type="text/css" href="/style.css" >
     <title>SmiteTroll</title>
 </head>
 <body>
@@ -25,39 +26,39 @@ ${godName}
 </c:forEach>
 </ul>
 
-<form action="godReroll" method="POST">
+<form id = "button1" action="godReroll" method="POST">
 <input type="submit" value="Reroll God" />
 </form>
 
-<form action="itemOneReroll" method="POST">
+<form id = "button2" action="itemOneReroll" method="POST">
 <input type="submit" value="Reroll First Item" />
 </form>
 
-<form action="itemTwoReroll" method="POST">
+<form id = "button3" action="itemTwoReroll" method="POST">
 <input type="submit" value="Reroll Second Item" />
 </form>
 
-<form action="itemThreeReroll" method="POST">
+<form id = "button4" action="itemThreeReroll" method="POST">
 <input type="submit" value="Reroll Third Item" />
 </form>
 
-<form action="itemFourReroll" method="POST">
+<form id = "button5" action="itemFourReroll" method="POST">
 <input type="submit" value="Reroll Fourth Item" />
 </form>
 
-<form action="itemFiveReroll" method="POST">
+<form id = "button6" action="itemFiveReroll" method="POST">
 <input type="submit" value="Reroll Fifth Item" />
 </form>
 
-<form action="itemSixReroll" method="POST">
+<form id = "button7" action="itemSixReroll" method="POST">
 <input type="submit" value="Reroll Sixth Item" />
 </form>
 
-<form action="relicOneReroll" method="POST">
+<form id = "button8" action="relicOneReroll" method="POST">
 <input type="submit" value="Reroll First Relic" />
 </form>
 
-<form action="relicTwoReroll" method="POST">
+<form id = "button9" action="relicTwoReroll" method="POST">
 <input type="submit" value="Reroll Second Relic" />
 </form>
 

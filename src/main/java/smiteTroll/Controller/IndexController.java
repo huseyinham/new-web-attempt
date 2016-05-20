@@ -34,12 +34,12 @@ public class IndexController {
 
     @RequestMapping("/")
     public String handleRoot(Model m, HttpSession session) throws SQLException, IOException, ClassNotFoundException {
-        rerollAmount = 3;
         return handleIndex(m, session);
     }
 
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public String handleIndex(Model m, HttpSession session) throws SQLException, IOException, ClassNotFoundException {
+        rerollAmount = 3;
         Sessions sessions = new Sessions(session, rerollAmount);
         sessions.setRerollAmount(rerollAmount);
         God god = godRepository.getNewGod();
