@@ -22,7 +22,7 @@ ${godName}
 
 <ul>
 <c:forEach items="${relics}" var="relic">
-  <li><c:out value="${relic.relicName}" /></li>
+  <li><c:out value="${relic.relicName}" />  </li>
 </c:forEach>
 </ul>
 

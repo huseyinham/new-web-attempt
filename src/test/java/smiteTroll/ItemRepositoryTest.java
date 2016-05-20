@@ -51,5 +51,4 @@ public class ItemRepositoryTest {
             Assert.assertTrue(actualResult.equals(type) || actualResult.equals(type + "_boots") || actualResult.equals("neutral"));
         }
     }
-
 }
