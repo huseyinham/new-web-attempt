@@ -16,6 +16,7 @@ import smiteTroll.Repositories.RelicRepository;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -29,15 +30,18 @@ public class IndexController {
     @Autowired
     private RelicRepository relicRepository;
 
+    private Integer rerollAmount = 3;
+
     @RequestMapping("/")
     public String handleRoot(Model m, HttpSession session) throws SQLException, IOException, ClassNotFoundException {
+        rerollAmount = 3;
         return handleIndex(m, session);
     }
 
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public String handleIndex(Model m, HttpSession session) throws SQLException, IOException, ClassNotFoundException {
-
-        Sessions sessions = new Sessions(session);
+        Sessions sessions = new Sessions(session, rerollAmount);
+        sessions.setRerollAmount(rerollAmount);
         God god = godRepository.getNewGod();
         List<Item> items = itemRepository.getItems(god.getGodType());
         sessions.setItems(items);
@@ -49,24 +53,188 @@ public class IndexController {
 
     @RequestMapping(value = "/godReroll", method = RequestMethod.POST)
     public String handleGodRerolls(Model m, HttpSession session) throws SQLException, IOException, ClassNotFoundException {
-
-        Sessions sessions = new Sessions(session);
+        Sessions sessions = new Sessions(session, rerollAmount);
+        sessions.setRerollAmount(rerollAmount);
+        if (outOfRerolls(sessions.getRerollAmount())) {
+            getBuildForGod(m, sessions, sessions.getCurrentGod());
+            return "index";
+        }
         God god = godRepository.reRoll(sessions.getCurrentGod());
+        rerollAmount --;
+        sessions.setRerollAmount(rerollAmount);
         getBuildForGod(m, sessions, god);
         return "index";
     }
 
-    @RequestMapping(value = "/relicReroll", method = RequestMethod.POST)
-    public String handleRelicRerolls(Model m, HttpSession session) throws SQLException, IOException, ClassNotFoundException {
+    @RequestMapping(value = "/itemOneReroll", method = RequestMethod.POST)
+    public String handleItemOneRerolls(Model m, HttpSession session) throws SQLException, IOException, ClassNotFoundException {
+        Sessions sessions = new Sessions(session, rerollAmount);
+        sessions.setRerollAmount(rerollAmount);
+        if (outOfRerolls(sessions.getRerollAmount())) {
+            getBuildForGod(m, sessions, sessions.getCurrentGod());
+            return "index";
+        }
+        Item item = itemRepository.reRoll(sessions.getFirstItem(),sessions.getItems());
+        rerollAmount --;
+        List<Item> items = new ArrayList<>();
+        items.add(item);
+        items.add(sessions.getSecondItem());
+        items.add(sessions.getThirdItem());
+        items.add(sessions.getFourthItem());
+        items.add(sessions.getFifthItem());
+        items.add(sessions.getSixthItem());
+        sessions.setItems(items);
+        getBuildForGod(m, sessions, sessions.getCurrentGod());
+        return "index";
+    }
 
-        Sessions sessions = new Sessions(session);
-        Relic relic = relicRepository.reRollRelic(sessions.getRelics());
-        getBuildForGod(m, sessions, god);
+    @RequestMapping(value = "/itemTwoReroll", method = RequestMethod.POST)
+    public String handleItemTwoRerolls(Model m, HttpSession session) throws SQLException, IOException, ClassNotFoundException {
+        Sessions sessions = new Sessions(session, rerollAmount);
+        sessions.setRerollAmount(rerollAmount);
+        if (outOfRerolls(sessions.getRerollAmount())) {
+            getBuildForGod(m, sessions, sessions.getCurrentGod());
+            return "index";
+        }
+        Item item = itemRepository.reRoll(sessions.getSecondItem(),sessions.getItems());
+        rerollAmount --;
+        List<Item> items = new ArrayList<>();
+        items.add(sessions.getFirstItem());
+        items.add(item);
+        items.add(sessions.getThirdItem());
+        items.add(sessions.getFourthItem());
+        items.add(sessions.getFifthItem());
+        items.add(sessions.getSixthItem());
+        sessions.setItems(items);
+        getBuildForGod(m, sessions, sessions.getCurrentGod());
+        return "index";
+    }
+
+    @RequestMapping(value = "/itemThreeReroll", method = RequestMethod.POST)
+    public String handleItemThreeRerolls(Model m, HttpSession session) throws SQLException, IOException, ClassNotFoundException {
+        Sessions sessions = new Sessions(session, rerollAmount);
+        sessions.setRerollAmount(rerollAmount);
+        if (outOfRerolls(sessions.getRerollAmount())) {
+            getBuildForGod(m, sessions, sessions.getCurrentGod());
+            return "index";
+        }
+        Item item = itemRepository.reRoll(sessions.getThirdItem(),sessions.getItems());
+        rerollAmount --;
+        List<Item> items = new ArrayList<>();
+        items.add(sessions.getFirstItem());
+        items.add(sessions.getSecondItem());
+        items.add(item);
+        items.add(sessions.getFourthItem());
+        items.add(sessions.getFifthItem());
+        items.add(sessions.getSixthItem());
+        sessions.setItems(items);
+        getBuildForGod(m, sessions, sessions.getCurrentGod());
+        return "index";
+    }
+
+    @RequestMapping(value = "/itemFourReroll", method = RequestMethod.POST)
+    public String handleItemFourRerolls(Model m, HttpSession session) throws SQLException, IOException, ClassNotFoundException {
+        Sessions sessions = new Sessions(session, rerollAmount);
+        sessions.setRerollAmount(rerollAmount);
+        if (outOfRerolls(sessions.getRerollAmount())) {
+            getBuildForGod(m, sessions, sessions.getCurrentGod());
+            return "index";
+        }
+        Item item = itemRepository.reRoll(sessions.getFourthItem(),sessions.getItems());
+        rerollAmount --;
+        List<Item> items = new ArrayList<>();
+        items.add(sessions.getFirstItem());
+        items.add(sessions.getSecondItem());
+        items.add(sessions.getThirdItem());
+        items.add(item);
+        items.add(sessions.getFifthItem());
+        items.add(sessions.getSixthItem());
+        sessions.setItems(items);
+        getBuildForGod(m, sessions, sessions.getCurrentGod());
+        return "index";
+    }
+
+    @RequestMapping(value = "/itemFiveReroll", method = RequestMethod.POST)
+    public String handleItemFiveRerolls(Model m, HttpSession session) throws SQLException, IOException, ClassNotFoundException {
+        Sessions sessions = new Sessions(session, rerollAmount);
+        sessions.setRerollAmount(rerollAmount);
+        if (outOfRerolls(sessions.getRerollAmount())) {
+            getBuildForGod(m, sessions, sessions.getCurrentGod());
+            return "index";
+        }
+        Item item = itemRepository.reRoll(sessions.getFifthItem(),sessions.getItems());
+        rerollAmount --;
+        List<Item> items = new ArrayList<>();
+        items.add(sessions.getFirstItem());
+        items.add(sessions.getSecondItem());
+        items.add(sessions.getThirdItem());
+        items.add(sessions.getFourthItem());
+        items.add(item);
+        items.add(sessions.getSixthItem());
+        sessions.setItems(items);
+        getBuildForGod(m, sessions, sessions.getCurrentGod());
+        return "index";
+    }
+
+    @RequestMapping(value = "/itemSixReroll", method = RequestMethod.POST)
+    public String handleItemSixRerolls(Model m, HttpSession session) throws SQLException, IOException, ClassNotFoundException {
+        Sessions sessions = new Sessions(session, rerollAmount);
+        sessions.setRerollAmount(rerollAmount);
+        if (outOfRerolls(sessions.getRerollAmount())) {
+            getBuildForGod(m, sessions, sessions.getCurrentGod());
+            return "index";
+        }
+        Item item = itemRepository.reRoll(sessions.getSixthItem(),sessions.getItems());
+        rerollAmount --;
+        List<Item> items = new ArrayList<>();
+        items.add(sessions.getFirstItem());
+        items.add(sessions.getSecondItem());
+        items.add(sessions.getThirdItem());
+        items.add(sessions.getFourthItem());
+        items.add(sessions.getFifthItem());
+        items.add(item);
+        sessions.setItems(items);
+        getBuildForGod(m, sessions, sessions.getCurrentGod());
+        return "index";
+    }
+
+    @RequestMapping(value = "/relicOneReroll", method = RequestMethod.POST)
+    public String handleRelicOneRerolls(Model m, HttpSession session) throws SQLException, IOException, ClassNotFoundException {
+        Sessions sessions = new Sessions(session, rerollAmount);
+        sessions.setRerollAmount(rerollAmount);
+        if (outOfRerolls(sessions.getRerollAmount())) {
+            getBuildForGod(m, sessions, sessions.getCurrentGod());
+            return "index";
+        }
+        Relic relic = relicRepository.reRollRelic(sessions.getFirstRelic(), sessions.getSecondRelic());
+        rerollAmount --;
+        List<Relic> relics = new ArrayList<>();
+        relics.add(relic);
+        relics.add(sessions.getSecondRelic());
+        sessions.setRelics(relics);
+        getBuildForGod(m, sessions, sessions.getCurrentGod());
+        return "index";
+    }
+
+    @RequestMapping(value = "/relicTwoReroll", method = RequestMethod.POST)
+    public String handleRelicTwoRerolls(Model m, HttpSession session) throws SQLException, IOException, ClassNotFoundException {
+        Sessions sessions = new Sessions(session, rerollAmount);
+        sessions.setRerollAmount(rerollAmount);
+        if (outOfRerolls(sessions.getRerollAmount())) {
+            getBuildForGod(m, sessions, sessions.getCurrentGod());
+            return "index";
+        }
+        Relic relic = relicRepository.reRollRelic(sessions.getSecondRelic(), sessions.getFirstRelic());
+        rerollAmount --;
+        List<Relic> relics = new ArrayList<>();
+        relics.add(sessions.getFirstRelic());
+        relics.add(relic);
+        sessions.setRelics(relics);
+        getBuildForGod(m, sessions, sessions.getCurrentGod());
         return "index";
     }
 
     private void getBuildForGod(Model m, Sessions sessions, God god) throws SQLException, ClassNotFoundException, IOException {
-
         sessions.setCurrentGod(god);
         m.addAttribute("godName", god.getGodName());
         List<Item> items = sessions.getItems();
@@ -75,7 +243,7 @@ public class IndexController {
         m.addAttribute("relics", relics);
     }
 
+    private boolean outOfRerolls(Integer rerollAmount){
+        return rerollAmount == 0;
+    }
 }
-
-
-

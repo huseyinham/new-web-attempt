@@ -35,15 +35,16 @@ public class RelicRepository {
         }
     }
 
-    public Relic reRollRelic(Relic rerolledRelic) throws SQLException, ClassNotFoundException, IOException {
+    public Relic reRollRelic(Relic rerolledRelic, Relic otherRelic) throws SQLException, ClassNotFoundException, IOException {
         Connection con = null;
         PreparedStatement prepStmt = null;
 
         try {
             con = connectionCreator.getConnection();
 
-            prepStmt = con.prepareStatement("SELECT * FROM relic WHERE relic_name != ? ORDER BY RAND() LIMIT 1");
+            prepStmt = con.prepareStatement("SELECT * FROM relic WHERE relic_name != ? AND relic_name != ? ORDER BY RAND() LIMIT 1");
             prepStmt.setString(1, rerolledRelic.getRelicName());
+            prepStmt.setString(2, otherRelic.getRelicName());
 
             ResultSet rs = prepStmt.executeQuery();
             rs.next();

@@ -26,8 +26,10 @@ public class RelicRepositoryTest {
     @Test
     public void testingRelicReroll() throws SQLException, IOException, ClassNotFoundException {
         Relic rerolledRelic = new Relic("Blink");
-        Relic newRelic = relicRepo.reRollRelic(rerolledRelic);
+        Relic otherRelic = new Relic("Teleport");
+        Relic newRelic = relicRepo.reRollRelic(rerolledRelic, otherRelic);
         Assert.assertTrue(!newRelic.getRelicName().equals(rerolledRelic.getRelicName()));
+        Assert.assertTrue(!newRelic.getRelicName().equals(otherRelic.getRelicName()));
     }
 
 }

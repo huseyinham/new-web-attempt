@@ -29,10 +29,37 @@ ${godName}
 <input type="submit" value="Reroll God" />
 </form>
 
-<form action="relicReroll" method="POST">
-<input type="submit" value="Reroll Relics" />
+<form action="itemOneReroll" method="POST">
+<input type="submit" value="Reroll First Item" />
 </form>
 
+<form action="itemTwoReroll" method="POST">
+<input type="submit" value="Reroll Second Item" />
+</form>
+
+<form action="itemThreeReroll" method="POST">
+<input type="submit" value="Reroll Third Item" />
+</form>
+
+<form action="itemFourReroll" method="POST">
+<input type="submit" value="Reroll Fourth Item" />
+</form>
+
+<form action="itemFiveReroll" method="POST">
+<input type="submit" value="Reroll Fifth Item" />
+</form>
+
+<form action="itemSixReroll" method="POST">
+<input type="submit" value="Reroll Sixth Item" />
+</form>
+
+<form action="relicOneReroll" method="POST">
+<input type="submit" value="Reroll First Relic" />
+</form>
+
+<form action="relicTwoReroll" method="POST">
+<input type="submit" value="Reroll Second Relic" />
+</form>
 
 </body>
 </html>
