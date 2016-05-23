@@ -2,6 +2,7 @@ package smiteTroll;
 
 import org.junit.Assert;
 import org.junit.Test;
+import smiteTroll.Classes.God;
 import smiteTroll.Classes.Item;
 import smiteTroll.Repositories.ItemRepository;
 
@@ -25,20 +26,22 @@ public class ItemRepositoryTest {
 
     @Test
     public void testingRerollWithBoots() throws SQLException, IOException, ClassNotFoundException {
+        God god = new God("Anubis", "magical");
         List<Item> itemList = itemRepo.getItems("magical");
         Item reRolledItem = itemList.get(0);
-        Item newItem = itemRepo.reRoll(reRolledItem, itemList);
+        Item newItem = itemRepo.reRoll(god, reRolledItem, itemList);
         Assert.assertTrue(!newItem.getItemName().equals(reRolledItem.getItemName()));
         Assert.assertTrue(newItem.getItemType().equals(reRolledItem.getItemType()));
     }
 
     @Test
     public void testingRerollWithNormalItem() throws SQLException, IOException, ClassNotFoundException {
+        God god = new God("Anubis", "magical");
         List<Item> itemList = itemRepo.getItems("magical");
         Item reRolledItem = itemList.get(1);
-        Item newItem = itemRepo.reRoll(reRolledItem, itemList);
+        Item newItem = itemRepo.reRoll(god, reRolledItem, itemList);
         Assert.assertTrue(!newItem.getItemName().equals(reRolledItem.getItemName()));
-        Assert.assertTrue(newItem.getItemType().equals(reRolledItem.getItemType()));
+        Assert.assertTrue(newItem.getItemType().equals(god.getGodType()) || newItem.getItemType().equals("neutral"));
         for(Item item : itemList){
             Assert.assertTrue(!newItem.getItemName().equals(item.getItemName()));
         }

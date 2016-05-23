@@ -1,5 +1,6 @@
 package smiteTroll.Repositories;
 
+import smiteTroll.Classes.God;
 import smiteTroll.Classes.Item;
 
 import java.io.IOException;
@@ -54,13 +55,19 @@ public class ItemRepository {
         }
     }
 
-    public Item reRoll(Item rerolledItem, List<Item> alreadySelectedItems) throws SQLException, IOException, ClassNotFoundException {
+    public Item reRoll(God god, Item rerolledItem, List<Item> alreadySelectedItems) throws SQLException, IOException, ClassNotFoundException {
         Connection con = null;
         PreparedStatement prepStmt = null;
         try {
             con = connectionCreator.getConnection();
-            prepStmt = con.prepareStatement("SELECT * FROM item WHERE item_type = ? AND item_name != ? AND item_name != ? AND item_name != ? AND item_name != ? AND item_name != ? AND item_name != ? ORDER BY RAND() LIMIT 1");
-            prepStmt.setString(1, rerolledItem.getItemType());
+            if(rerolledItem.getItemType().contains("boots")){
+                prepStmt = con.prepareStatement("SELECT * FROM item WHERE item_type = ? AND item_name != ? AND item_name != ? AND item_name != ? AND item_name != ? AND item_name != ? AND item_name != ? ORDER BY RAND() LIMIT 1");
+                prepStmt.setString(1, god.getGodType() + "_boots");
+            } else {
+                prepStmt = con.prepareStatement("SELECT * FROM item WHERE (item_type = ? OR item_type = 'neutral') AND (item_name != ? AND item_name != ? AND item_name != ? AND item_name != ? AND item_name != ? AND item_name != ?) ORDER BY RAND() LIMIT 1");
+                prepStmt.setString(1, god.getGodType());
+            }
+
             int i = 2;
             for(Item item : alreadySelectedItems){
                 prepStmt.setString(i, item.getItemName());

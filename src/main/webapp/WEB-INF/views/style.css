@@ -1,44 +1,4 @@
-#button1 {
-    float: left;
-    display: inline-block;
-}
-
-#button2 {
-    float: left;
-    display: inline-block;
-}
-
-#button3 {
-    float: left;
-    display: inline-block;
-}
-
-#button4 {
-    float: left;
-    display: inline-block;
-}
-
-#button5 {
-    float: left;
-    display: inline-block;
-}
-
-#button6 {
-    float: left;
-    display: inline-block;
-}
-
-#button7 {
-    float: left;
-    display: inline-block;
-}
-
-#button8 {
-    float: left;
-    display: inline-block;
-}
-
-#button9 {
-    float: left;
+.god, div1, .div2 {
+    width: auto;
     display: inline-block;
 }

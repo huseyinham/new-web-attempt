@@ -74,7 +74,7 @@ public class IndexController {
             getBuildForGod(m, sessions, sessions.getCurrentGod());
             return "index";
         }
-        Item item = itemRepository.reRoll(sessions.getFirstItem(),sessions.getItems());
+        Item item = itemRepository.reRoll(sessions.getCurrentGod(), sessions.getFirstItem(),sessions.getItems());
         rerollAmount --;
         List<Item> items = new ArrayList<>();
         items.add(item);
@@ -96,7 +96,7 @@ public class IndexController {
             getBuildForGod(m, sessions, sessions.getCurrentGod());
             return "index";
         }
-        Item item = itemRepository.reRoll(sessions.getSecondItem(),sessions.getItems());
+        Item item = itemRepository.reRoll(sessions.getCurrentGod(), sessions.getSecondItem(),sessions.getItems());
         rerollAmount --;
         List<Item> items = new ArrayList<>();
         items.add(sessions.getFirstItem());
@@ -118,7 +118,7 @@ public class IndexController {
             getBuildForGod(m, sessions, sessions.getCurrentGod());
             return "index";
         }
-        Item item = itemRepository.reRoll(sessions.getThirdItem(),sessions.getItems());
+        Item item = itemRepository.reRoll(sessions.getCurrentGod(), sessions.getThirdItem(),sessions.getItems());
         rerollAmount --;
         List<Item> items = new ArrayList<>();
         items.add(sessions.getFirstItem());
@@ -140,7 +140,7 @@ public class IndexController {
             getBuildForGod(m, sessions, sessions.getCurrentGod());
             return "index";
         }
-        Item item = itemRepository.reRoll(sessions.getFourthItem(),sessions.getItems());
+        Item item = itemRepository.reRoll(sessions.getCurrentGod(), sessions.getFourthItem(),sessions.getItems());
         rerollAmount --;
         List<Item> items = new ArrayList<>();
         items.add(sessions.getFirstItem());
@@ -162,7 +162,7 @@ public class IndexController {
             getBuildForGod(m, sessions, sessions.getCurrentGod());
             return "index";
         }
-        Item item = itemRepository.reRoll(sessions.getFifthItem(),sessions.getItems());
+        Item item = itemRepository.reRoll(sessions.getCurrentGod(), sessions.getFifthItem(),sessions.getItems());
         rerollAmount --;
         List<Item> items = new ArrayList<>();
         items.add(sessions.getFirstItem());
@@ -184,7 +184,7 @@ public class IndexController {
             getBuildForGod(m, sessions, sessions.getCurrentGod());
             return "index";
         }
-        Item item = itemRepository.reRoll(sessions.getSixthItem(),sessions.getItems());
+        Item item = itemRepository.reRoll(sessions.getCurrentGod(), sessions.getSixthItem(),sessions.getItems());
         rerollAmount --;
         List<Item> items = new ArrayList<>();
         items.add(sessions.getFirstItem());
