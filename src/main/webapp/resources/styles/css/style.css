@@ -1,0 +1,155 @@
+    h1, p, .godname {
+        font-family: "Times New Roman", Times, serif;
+    }
+
+    h1 {
+        font-size: 40px;
+    }
+
+    p {
+        font-size: 32px;
+    }
+
+    .godname {
+        font-size: 20px;
+    }
+
+    .itemlist {
+        width: 300px;
+        display: inline-block;
+        font-size: 20px;
+    }
+
+     .itembuttons {
+        width: auto;
+        vertical-align: top;
+        margin: 10px 40px;
+        display: inline-block;
+     }
+
+    .reliclist {
+        width: 165px;
+        display: inline-block;
+        font-size: 20px;
+    }
+
+    .relicbuttons {
+        width: auto;
+        display: inline-block;
+        height: 70px;
+        vertical-align: top;
+        margin: 15px 60px;
+    }
+
+    .relicButton {
+        display: inline-block;
+        margin: 2px;
+        margin-top: 20px;
+    }
+
+    .gbutton, .rfbutton {
+        width: 200px;
+        padding: 15px 0px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        background-color: white;
+        color: black;
+        background: #e0e0e0;
+        border: 2px solid #bdbdbd;
+    }
+
+    .gbutton:hover, .rfbutton:hover {
+        background: #FFFFFF;
+        border: 2px solid #4caf50;
+    }
+
+    button.gbutton span:after, button.rfbutton span:after {
+        content: '\f021';
+        padding-left: 10px;
+        opacity: 0;
+    }
+
+    button.gbutton:hover span:after, button.rfbutton:hover span:after {
+        opacity: 1;
+        transition: all 1s;
+    }
+
+    button.rfbutton span:after {
+        content: '\f1da';
+        padding-left: 10px;
+        opacity: 0;
+    }
+
+    .ibutton {
+        width: 100px;
+        padding: 5px 0px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        background-color: white;
+        color: black;
+        background: #e0e0e0;
+        border: 2px solid #bdbdbd;
+    }
+
+    .ibutton:hover {
+        background: #FFFFFF;
+        border: 2px solid #4caf50;
+    }
+
+    button.ibutton span:after {
+        content: '\f021';
+        padding-left: 10px;
+        opacity: 0;
+    }
+
+    button.ibutton:hover span:after {
+        opacity: 1;
+        transition: all 1s;
+    }
+
+    .rbutton {
+        width: 160px;
+        padding: 5px 5px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        background-color: white;
+        color: black;
+        background: #e0e0e0;
+        border: 2px solid #bdbdbd;
+    }
+
+    .rbutton:hover {
+        background: #FFFFFF;
+        border: 2px solid #4caf50;
+    }
+
+    button.rbutton span:after {
+        content: '\f021';
+        padding-left: 10px;
+        opacity: 0;
+    }
+
+    button.rbutton:hover span:after {
+        opacity: 1;
+        transition: all 1s;
+    }
+
+    li {
+        margin: 22px;
+    }
+
+    form {
+        margin: 5px;
+    }

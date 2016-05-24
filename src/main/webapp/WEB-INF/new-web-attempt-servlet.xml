@@ -25,4 +25,7 @@
     <bean id="itemRepository" class="smiteTroll.Repositories.ItemRepository"/>
     <bean id="relicRepository" class="smiteTroll.Repositories.RelicRepository"/>
 
+    <mvc:resources mapping="/resources/**" location="/resources/styles/"
+                   cache-period="31556926"/>
+
 </beans>

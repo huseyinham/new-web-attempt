@@ -246,4 +246,49 @@ public class IndexController {
     private boolean outOfRerolls(Integer rerollAmount){
         return rerollAmount == 0;
     }
+
+    @RequestMapping(value = "/godReroll", method = RequestMethod.GET)
+    public String handleRefreshGod(Model m, HttpSession session) throws SQLException, IOException, ClassNotFoundException {
+        return handleIndex(m, session);
+    }
+
+    @RequestMapping(value = "/itemOneReroll", method = RequestMethod.GET)
+    public String handleRefreshOne(Model m, HttpSession session) throws SQLException, IOException, ClassNotFoundException {
+        return handleIndex(m, session);
+    }
+
+    @RequestMapping(value = "/itemTwoReroll", method = RequestMethod.GET)
+    public String handleRefreshTwo(Model m, HttpSession session) throws SQLException, IOException, ClassNotFoundException {
+        return handleIndex(m, session);
+    }
+
+    @RequestMapping(value = "/itemThreeReroll", method = RequestMethod.GET)
+    public String handleRefreshThree(Model m, HttpSession session) throws SQLException, IOException, ClassNotFoundException {
+        return handleIndex(m, session);
+    }
+
+    @RequestMapping(value = "/itemFourReroll", method = RequestMethod.GET)
+    public String handleRefreshFour(Model m, HttpSession session) throws SQLException, IOException, ClassNotFoundException {
+        return handleIndex(m, session);
+    }
+
+    @RequestMapping(value = "/itemFiveReroll", method = RequestMethod.GET)
+    public String handleRefreshFive(Model m, HttpSession session) throws SQLException, IOException, ClassNotFoundException {
+        return handleIndex(m, session);
+    }
+
+    @RequestMapping(value = "/itemSixReroll", method = RequestMethod.GET)
+    public String handleRefreshSix(Model m, HttpSession session) throws SQLException, IOException, ClassNotFoundException {
+        return handleIndex(m, session);
+    }
+
+    @RequestMapping(value = "/relicOneReroll", method = RequestMethod.GET)
+    public String handleRefreshRelicOne(Model m, HttpSession session) throws SQLException, IOException, ClassNotFoundException {
+        return handleIndex(m, session);
+    }
+
+    @RequestMapping(value = "/relicTwoReroll", method = RequestMethod.GET)
+    public String handleRefreshRelicTwo(Model m, HttpSession session) throws SQLException, IOException, ClassNotFoundException {
+        return handleIndex(m, session);
+    }
 }
