@@ -4,7 +4,7 @@
 <head>
     <title>SmiteTroll</title>
     <link rel="stylesheet" href="<c:url value="/resources/css/style.css" />"
-    <link rel="stylesheet" href="<c:url value="/resources/font-awesome/*" />"
+    <link rel="stylesheet" href="<c:url value="/resources/font-awesome/css/font-awesome.css" />"
     <link rel="stylesheet" href="<c:url value="/resources/font-awesome/**" />"
 
 </head>
