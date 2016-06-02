@@ -36,27 +36,33 @@
     </div>
 
     <div class="itembuttons">
-        <form action="itemOneReroll" method="POST">
+        <form action="itemReroll" method="POST">
+        <input type="hidden" name="rerollIndex" value="0" />
         <button class="ibutton" type="submit"/><span>Reroll</span></button>
         </form>
 
-        <form action="itemTwoReroll" method="POST">
+        <form action="itemReroll" method="POST">
+        <input type="hidden" name="rerollIndex" value="1" />
         <button class="ibutton" type="submit"/><span>Reroll</span></button>
         </form>
 
-        <form action="itemThreeReroll" method="POST">
+        <form action="itemReroll" method="POST">
+        <input type="hidden" name="rerollIndex" value="2" />
         <button class="ibutton" type="submit"/><span>Reroll</span></button>
         </form>
 
-        <form action="itemFourReroll" method="POST">
+        <form action="itemReroll" method="POST">
+        <input type="hidden" name="rerollIndex" value="3" />
         <button class="ibutton" type="submit"/><span>Reroll</span></button>
         </form>
 
-        <form action="itemFiveReroll" method="POST">
+        <form action="itemReroll" method="POST">
+        <input type="hidden" name="rerollIndex" value="4" />
         <button class="ibutton" type="submit"/><span>Reroll</span></button>
         </form>
 
-        <form action="itemSixReroll" method="POST">
+        <form action="itemReroll" method="POST">
+        <input type="hidden" name="rerollIndex" value="5" />
         <button class="ibutton" type="submit"/><span>Reroll</span></button>
         </form>
     </div>
@@ -72,11 +78,13 @@
     </div>
 
     <div class="relicbuttons">
-        <form class="relicButton" action="relicOneReroll" method="POST">
+        <form class="relicButton" action="relicReroll" method="POST">
+        <input type="hidden" name="rerollIndex" value="0" />
         <button class ="rbutton" type="submit"/><span>Reroll Relic One</span></button>
         </form>
 
-        <form class="relicButton" action="relicTwoReroll" method="POST">
+        <form class="relicButton" action="relicReroll" method="POST">
+        <input type="hidden" name="rerollIndex" value="1" />
         <button class="rbutton" type="submit"/><span>Reroll Relic Two</span></button>
         </form>
     </div>

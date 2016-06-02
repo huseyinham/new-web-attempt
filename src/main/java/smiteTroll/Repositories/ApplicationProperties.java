@@ -8,11 +8,15 @@ public class ApplicationProperties {
 
     private Properties prop;
 
-    public ApplicationProperties() throws IOException {
-        prop = new Properties();
-        InputStream in = getClass().getResourceAsStream("/jdbc.properties");
-        prop.load(in);
-        in.close();
+    public ApplicationProperties() {
+        try {
+            prop = new Properties();
+            InputStream in = getClass().getResourceAsStream("/jdbc.properties");
+            prop.load(in);
+            in.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public String getDriver() {

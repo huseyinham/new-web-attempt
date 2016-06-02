@@ -7,9 +7,13 @@ import java.sql.SQLException;
 
 public class ConnectionCreator {
 
-    public Connection getConnection() throws SQLException, ClassNotFoundException, IOException {
-        ApplicationProperties properties = new ApplicationProperties();
-        Class.forName(properties.getDriver());
-        return DriverManager.getConnection(properties.getUrl(), properties.getUsername(), properties.getPassword());
+    public Connection getConnection() {
+        try {
+            ApplicationProperties properties = new ApplicationProperties();
+            Class.forName(properties.getDriver());
+            return DriverManager.getConnection(properties.getUrl(), properties.getUsername(), properties.getPassword());
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -11,49 +11,57 @@ public class RelicRepository {
 
     private ConnectionCreator connectionCreator = new ConnectionCreator();
 
-    public List<Relic> getRelics() throws SQLException, ClassNotFoundException, IOException {
-        Connection con = null;
-        Statement stmt = null;
-
+    public List<Relic> getRelics() {
         try {
-            con = connectionCreator.getConnection();
+            Connection con = null;
+            Statement stmt = null;
 
-            List<Relic> relicList = new ArrayList<>();
-            stmt = con.createStatement();
-            String query = "SELECT * FROM relic ORDER BY RAND() LIMIT 2";
+            try {
+                con = connectionCreator.getConnection();
 
-            ResultSet rs = stmt.executeQuery(query);
-            while(rs.next()){
-                String relicName = rs.getString("relic_name");
-                relicList.add(new Relic(relicName));
+                List<Relic> relicList = new ArrayList<>();
+                stmt = con.createStatement();
+                String query = "SELECT * FROM relic ORDER BY RAND() LIMIT 2";
+
+                ResultSet rs = stmt.executeQuery(query);
+                while (rs.next()) {
+                    String relicName = rs.getString("relic_name");
+                    relicList.add(new Relic(relicName));
+                }
+                return relicList;
+
+            } finally {
+                close(stmt);
+                close(con);
             }
-            return relicList;
-
-        } finally {
-            close(stmt);
-            close(con);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
-    public Relic reRollRelic(Relic rerolledRelic, Relic otherRelic) throws SQLException, ClassNotFoundException, IOException {
-        Connection con = null;
-        PreparedStatement prepStmt = null;
-
+    public Relic reRollRelic(List<Relic> relics) {
         try {
-            con = connectionCreator.getConnection();
+            Connection con = null;
+            PreparedStatement prepStmt = null;
 
-            prepStmt = con.prepareStatement("SELECT * FROM relic WHERE relic_name != ? AND relic_name != ? ORDER BY RAND() LIMIT 1");
-            prepStmt.setString(1, rerolledRelic.getRelicName());
-            prepStmt.setString(2, otherRelic.getRelicName());
+            try {
+                con = connectionCreator.getConnection();
 
-            ResultSet rs = prepStmt.executeQuery();
-            rs.next();
-            String relicName = rs.getString("relic_name");
-            return new Relic(relicName);
+                prepStmt = con.prepareStatement("SELECT * FROM relic WHERE relic_name != ? AND relic_name != ? ORDER BY RAND() LIMIT 1");
+                prepStmt.setString(1, relics.get(0).getRelicName());
+                prepStmt.setString(2, relics.get(1).getRelicName());
 
-        } finally {
-            close(prepStmt);
-            close(con);
+                ResultSet rs = prepStmt.executeQuery();
+                rs.next();
+                String relicName = rs.getString("relic_name");
+                return new Relic(relicName);
+
+            } finally {
+                close(prepStmt);
+                close(con);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 

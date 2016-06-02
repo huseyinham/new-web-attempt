@@ -7,6 +7,7 @@ import smiteTroll.Repositories.RelicRepository;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -25,11 +26,16 @@ public class RelicRepositoryTest {
 
     @Test
     public void testingRelicReroll() throws SQLException, IOException, ClassNotFoundException {
-        Relic rerolledRelic = new Relic("Blink");
-        Relic otherRelic = new Relic("Teleport");
-        Relic newRelic = relicRepo.reRollRelic(rerolledRelic, otherRelic);
-        Assert.assertTrue(!newRelic.getRelicName().equals(rerolledRelic.getRelicName()));
-        Assert.assertTrue(!newRelic.getRelicName().equals(otherRelic.getRelicName()));
+        List<Relic> relics = new ArrayList<>();
+        relics.add(new Relic("Blink"));
+        relics.add(new Relic("Teleport"));
+        Relic newRelic = relicRepo.reRollRelic(relics);
+        System.out.println(newRelic.getRelicName() + " reroll");
+        for(Relic relic : relics){
+            System.out.println(relic.getRelicName());
+            Assert.assertTrue(!newRelic.getRelicName().equals(relic.getRelicName()));
+        }
+
     }
 
 }
