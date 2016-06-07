@@ -15,17 +15,17 @@ public class ItemRepositoryTest {
     private ItemRepository itemRepo = new ItemRepository();
 
     @Test
-    public void testingValidItemsForPhysicalGod() throws SQLException, IOException, ClassNotFoundException {
+    public void testingValidItemsForPhysicalGod()  {
         assertValidItemsForGod("physical");
     }
 
     @Test
-    public void testingValidItemsForMagicalGod() throws SQLException, IOException, ClassNotFoundException {
+    public void testingValidItemsForMagicalGod() {
         assertValidItemsForGod("magical");
     }
 
     @Test
-    public void testingRerollWithBoots() throws SQLException, IOException, ClassNotFoundException {
+    public void testingRerollWithBoots() {
         God god = new God("Anubis", "magical");
         List<Item> itemList = itemRepo.getItems("magical");
         Item reRolledItem = itemList.get(0);
@@ -35,7 +35,7 @@ public class ItemRepositoryTest {
     }
 
     @Test
-    public void testingRerollWithNormalItem() throws SQLException, IOException, ClassNotFoundException {
+    public void testingRerollWithNormalItem() {
         God god = new God("Anubis", "magical");
         List<Item> itemList = itemRepo.getItems("magical");
         Item reRolledItem = itemList.get(1);
@@ -47,7 +47,7 @@ public class ItemRepositoryTest {
         }
     }
 
-    private void assertValidItemsForGod(String type) throws SQLException, IOException, ClassNotFoundException {
+    private void assertValidItemsForGod(String type)  {
         List<Item> itemList = itemRepo.getItems(type);
         for(Item item : itemList){
             String actualResult = item.getItemType();

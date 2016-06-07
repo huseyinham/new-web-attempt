@@ -34,7 +34,7 @@ public class IndexController {
     private Integer rerollAmount = 3;
 
     @RequestMapping("/")
-    public String handleRoot(Model m, HttpSession session) throws SQLException, IOException, ClassNotFoundException {
+    public String handleRoot(Model m, HttpSession session) {
         return handleIndex(m, session);
     }
 

@@ -17,7 +17,7 @@ public class RelicRepositoryTest {
     private RelicRepository relicRepo = new RelicRepository();
 
     @Test
-    public void testingOnlyTwoRelicsAreReturned() throws SQLException, IOException, ClassNotFoundException {
+    public void testingOnlyTwoRelicsAreReturned()  {
         List<Relic> relicList = relicRepo.getRelics();
         Assert.assertEquals(2, relicList.size());
         Assert.assertTrue(RELIC_NAMES.contains(relicList.get(0).getRelicName()));
@@ -25,7 +25,7 @@ public class RelicRepositoryTest {
     }
 
     @Test
-    public void testingRelicReroll() throws SQLException, IOException, ClassNotFoundException {
+    public void testingRelicReroll() {
         List<Relic> relics = new ArrayList<>();
         relics.add(new Relic("Blink"));
         relics.add(new Relic("Teleport"));

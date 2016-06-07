@@ -16,13 +16,13 @@ public class GodRepositoryTest {
     private God previousGod = new God("Thanatos", "physical");
 
     @Test
-    public void testPreviousGodNotReselected() throws SQLException, IOException, ClassNotFoundException {
+    public void testPreviousGodNotReselected()  {
         God selectedGod = godRepo.reRoll(previousGod);
         Assert.assertTrue(!selectedGod.getGodName().equals(previousGod.getGodName()));
     }
 
     @Test
-    public void testSelectedGodIsInTheList() throws SQLException, IOException, ClassNotFoundException {
+    public void testSelectedGodIsInTheList()  {
         God selectedGod = godRepo.reRoll(previousGod);
         List<God> listOfGods = getPotentialRerollableGods();
         Boolean found = false;
