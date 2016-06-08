@@ -47,7 +47,7 @@ public class RelicRepository {
             try {
                 con = connectionCreator.getConnection();
 
-                prepStmt = con.prepareStatement("SELECT * FROM relic WHERE relic_name != ? AND relic_name != ? ORDER BY RAND() LIMIT 1");
+                prepStmt = con.prepareStatement("SELECT * FROM relic WHERE relic_name NOT IN (?,?) ORDER BY RAND() LIMIT 1");
                 prepStmt.setString(1, relics.get(0).getRelicName());
                 prepStmt.setString(2, relics.get(1).getRelicName());
 
