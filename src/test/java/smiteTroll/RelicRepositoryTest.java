@@ -30,12 +30,8 @@ public class RelicRepositoryTest {
         relics.add(new Relic("Blink"));
         relics.add(new Relic("Teleport"));
         Relic newRelic = relicRepo.reRollRelic(relics);
-        System.out.println(newRelic.getRelicName() + " reroll");
         for(Relic relic : relics){
-            System.out.println(relic.getRelicName());
             Assert.assertTrue(!newRelic.getRelicName().equals(relic.getRelicName()));
         }
-
     }
-
 }

@@ -3,7 +3,6 @@ package smiteTroll.Repositories;
 import smiteTroll.Classes.God;
 import smiteTroll.Classes.Item;
 
-import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +28,7 @@ public class ItemRepository {
                 prepStmt.setString(1, type + "_boots");
                 ResultSet rs = prepStmt.executeQuery();
                 rs.next();
-                return toItem(rs);
+                return asItem(rs);
             } finally {
                 close(prepStmt);
                 close(con);
@@ -51,7 +50,7 @@ public class ItemRepository {
                 prepStmt.setString(2, "neutral");
                 ResultSet rs = prepStmt.executeQuery();
                 while (rs.next()) {
-                    items.add(toItem(rs));
+                    items.add(asItem(rs));
                 }
                 return items;
             } finally {
@@ -70,10 +69,10 @@ public class ItemRepository {
             try {
                 con = connectionCreator.getConnection();
                 if (rerolledItem.getItemType().contains("boots")) {
-                    prepStmt = con.prepareStatement("SELECT * FROM item WHERE item_type = ? AND item_name != ? AND item_name != ? AND item_name != ? AND item_name != ? AND item_name != ? AND item_name != ? ORDER BY RAND() LIMIT 1");
+                    prepStmt = con.prepareStatement("SELECT * FROM item WHERE item_type = ? AND item_name NOT IN (?,?,?,?,?,?) ORDER BY RAND() LIMIT 1");
                     prepStmt.setString(1, god.getGodType() + "_boots");
                 } else {
-                    prepStmt = con.prepareStatement("SELECT * FROM item WHERE (item_type = ? OR item_type = 'neutral') AND (item_name != ? AND item_name != ? AND item_name != ? AND item_name != ? AND item_name != ? AND item_name != ?) ORDER BY RAND() LIMIT 1");
+                    prepStmt = con.prepareStatement("SELECT * FROM item WHERE (item_type = ? OR item_type = 'neutral') AND item_name NOT IN (?,?,?,?,?,?) ORDER BY RAND() LIMIT 1");
                     prepStmt.setString(1, god.getGodType());
                 }
 
@@ -84,7 +83,7 @@ public class ItemRepository {
                 }
                 ResultSet rs = prepStmt.executeQuery();
                 rs.next();
-                return toItem(rs);
+                return asItem(rs);
             } finally {
                 close(prepStmt);
                 close(con);
@@ -94,7 +93,7 @@ public class ItemRepository {
         }
     }
 
-    private Item toItem(ResultSet rs) throws SQLException {
+    private Item asItem(ResultSet rs) throws SQLException {
         String itemName = rs.getString("item_name");
         String itemType = rs.getString("item_type");
         return new Item(itemName, itemType);

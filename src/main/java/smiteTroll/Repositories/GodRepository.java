@@ -2,7 +2,6 @@ package smiteTroll.Repositories;
 
 import smiteTroll.Classes.God;
 
-import java.io.IOException;
 import java.sql.*;
 
 public class GodRepository {
@@ -19,7 +18,7 @@ public class GodRepository {
                 String query = "SELECT * FROM god ORDER BY RAND() LIMIT 1";
                 ResultSet rs = stmt.executeQuery(query);
                 rs.next();
-                return toGod(rs);
+                return asGod(rs);
 
             } finally {
                 close(stmt);
@@ -43,7 +42,7 @@ public class GodRepository {
                 prepStmt.setString(2, previousGod.getGodType());
                 ResultSet rs = prepStmt.executeQuery();
                 rs.next();
-                return toGod(rs);
+                return asGod(rs);
 
             } finally {
                 close(prepStmt);
@@ -54,7 +53,9 @@ public class GodRepository {
         }
     }
 
-    private God toGod(ResultSet rs) throws SQLException {
+
+
+    private God asGod(ResultSet rs) throws SQLException {
         String godName = rs.getString("god_name");
         String godType = rs.getString("god_type");
         return new God(godName, godType);
