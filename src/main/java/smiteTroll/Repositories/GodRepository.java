@@ -32,9 +32,7 @@ public class GodRepository {
     public God reRoll(God previousGod) {
         try {
             Connection con = null;
-
             PreparedStatement prepStmt = null;
-
             try {
                 con = connectionCreator.getConnection();
                 prepStmt = con.prepareStatement("SELECT * FROM god WHERE god_name != ? AND god_type = ? ORDER BY RAND() LIMIT 1");
@@ -53,7 +51,24 @@ public class GodRepository {
         }
     }
 
-
+    public void addNewGodToDB(String name, String type) {
+        try {
+            Connection con = null;
+            PreparedStatement prepStmt = null;
+            try {
+                prepStmt = con.prepareStatement("INSERT INTO god (god_name, god_type) VALUES (?,?)");
+                prepStmt.setString(1, name);
+                prepStmt.setString(2, type);
+                ResultSet rs = prepStmt.executeQuery();
+                rs.next();
+            } finally {
+                close(prepStmt);
+                close(con);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     private God asGod(ResultSet rs) throws SQLException {
         String godName = rs.getString("god_name");

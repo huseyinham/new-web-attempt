@@ -52,6 +52,11 @@ public class IndexController {
         return "index";
     }
 
+    @RequestMapping(value = "/addData", method = RequestMethod.GET)
+    public String handleAddData(Model m, HttpSession session) {
+        return "addData";
+    }
+
     @RequestMapping(value = "/godReroll", method = RequestMethod.POST)
     public String handleGodRerolls(Model m, HttpSession session) {
         Sessions sessions = new Sessions(session, rerollAmount);
@@ -101,6 +106,20 @@ public class IndexController {
         sessions.setRelics(relics);
         getBuildForGod(m, sessions, sessions.getCurrentGod());
         return "index";
+    }
+
+    @RequestMapping(value = "/godAdder", method = RequestMethod.POST)
+    public String handleGodAdding(Model m, HttpSession session, HttpServletRequest request) {
+        String name = request.getParameter("godName");
+        String type = request.getParameter("godType");
+        godRepository.addNewGodToDB(name, type);
+
+        return "addData";
+    }
+
+    @RequestMapping(value = "/godAdder", method = RequestMethod.GET)
+    public String handleRefreshData(Model m, HttpSession session, HttpServletRequest request) {
+        return handleGodAdding(m, session, request);
     }
 
     private void getBuildForGod(Model m, Sessions sessions, God god) {
