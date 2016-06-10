@@ -56,11 +56,29 @@ public class GodRepository {
             Connection con = null;
             PreparedStatement prepStmt = null;
             try {
+                con = connectionCreator.getConnection();
                 prepStmt = con.prepareStatement("INSERT INTO god (god_name, god_type) VALUES (?,?)");
                 prepStmt.setString(1, name);
                 prepStmt.setString(2, type);
-                ResultSet rs = prepStmt.executeQuery();
-                rs.next();
+                prepStmt.executeUpdate();
+            } finally {
+                close(prepStmt);
+                close(con);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void deleteGodFromDB(String name) {
+        try {
+            Connection con = null;
+            PreparedStatement prepStmt = null;
+            try {
+                con = connectionCreator.getConnection();
+                prepStmt = con.prepareStatement("DELETE FROM god WHERE god_name = ?");
+                prepStmt.setString(1, name);
+                prepStmt.executeUpdate();
             } finally {
                 close(prepStmt);
                 close(con);

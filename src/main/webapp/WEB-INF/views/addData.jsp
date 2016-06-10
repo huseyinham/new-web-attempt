@@ -4,10 +4,15 @@
 <head>
     <title>SmiteTroll Data Entry</title>
     <div class="godData">
-            <form action="godadder" method="POST">
-            <input type="text" name="godName"/>
-            <input type="text" name="godType"/>
-            <button class="gAdderButton" type="submit"/><span>Add God</span></button>
+            <form action="addGodData" method="POST">
+                <input type="text" name="godName"/>
+                <input type="text" name="godType"/>
+                <button class="gAdderButton" type="submit"/><span>Add God</span></button>
+            </form>
+
+            <form action="removeGodData" method="POST">
+                <input type="text" name="godName"/>
+                <button class="gRemoveButton" type="submit"/><span>Remove God</span></button>
             </form>
     </div>
 </head>
