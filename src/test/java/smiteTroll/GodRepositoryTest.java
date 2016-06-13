@@ -2,11 +2,9 @@ package smiteTroll;
 
 import org.junit.Assert;
 import org.junit.Test;
-import smiteTroll.Classes.God;
-import smiteTroll.Repositories.GodRepository;
+import smiteTroll.classes.God;
+import smiteTroll.repositories.GodRepository;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 

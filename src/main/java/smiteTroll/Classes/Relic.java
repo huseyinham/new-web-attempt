@@ -1,4 +1,4 @@
-package smiteTroll.Classes;
+package smiteTroll.classes;
 
 public class Relic {
 

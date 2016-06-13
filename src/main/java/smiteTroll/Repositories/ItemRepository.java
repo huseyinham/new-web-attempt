@@ -1,7 +1,8 @@
-package smiteTroll.Repositories;
+package smiteTroll.repositories;
 
-import smiteTroll.Classes.God;
-import smiteTroll.Classes.Item;
+import smiteTroll.classes.God;
+import smiteTroll.classes.Item;
+import smiteTroll.exceptions.AccessingDatabaseException;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ public class ItemRepository {
 
     private ConnectionCreator connectionCreator = new ConnectionCreator();
 
-    public List<Item> getItems(String godType)  {
+    public List<Item> getItems(String godType) {
         List<Item> itemList = new ArrayList();
         itemList.add(getBootsItem(godType));
         itemList.addAll(getRestOfItems(godType));
@@ -33,8 +34,8 @@ public class ItemRepository {
                 close(prepStmt);
                 close(con);
             }
-        }catch (SQLException e) {
-            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new AccessingDatabaseException("Cannot select boots item from the database.");
         }
     }
 
@@ -58,7 +59,7 @@ public class ItemRepository {
                 close(con);
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new AccessingDatabaseException("Cannot select items from the database.");
         }
     }
 
@@ -89,7 +90,7 @@ public class ItemRepository {
                 close(con);
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new AccessingDatabaseException("Cannot retrieve specific item from the database.");
         }
     }
 

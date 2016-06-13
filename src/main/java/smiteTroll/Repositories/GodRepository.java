@@ -1,6 +1,7 @@
-package smiteTroll.Repositories;
+package smiteTroll.repositories;
 
-import smiteTroll.Classes.God;
+import smiteTroll.classes.God;
+import smiteTroll.exceptions.AccessingDatabaseException;
 
 import java.sql.*;
 
@@ -25,7 +26,7 @@ public class GodRepository {
                 close(con);
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new AccessingDatabaseException("Cannot select god from database.");
         }
     }
 
@@ -47,44 +48,7 @@ public class GodRepository {
                 close(con);
             }
         }catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void addNewGodToDB(String name, String type) {
-        try {
-            Connection con = null;
-            PreparedStatement prepStmt = null;
-            try {
-                con = connectionCreator.getConnection();
-                prepStmt = con.prepareStatement("INSERT INTO god (god_name, god_type) VALUES (?,?)");
-                prepStmt.setString(1, name);
-                prepStmt.setString(2, type);
-                prepStmt.executeUpdate();
-            } finally {
-                close(prepStmt);
-                close(con);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void deleteGodFromDB(String name) {
-        try {
-            Connection con = null;
-            PreparedStatement prepStmt = null;
-            try {
-                con = connectionCreator.getConnection();
-                prepStmt = con.prepareStatement("DELETE FROM god WHERE god_name = ?");
-                prepStmt.setString(1, name);
-                prepStmt.executeUpdate();
-            } finally {
-                close(prepStmt);
-                close(con);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new AccessingDatabaseException("Cannot select god from database.");
         }
     }
 

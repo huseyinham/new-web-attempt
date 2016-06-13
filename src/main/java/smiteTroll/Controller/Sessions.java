@@ -1,11 +1,10 @@
-package smiteTroll.Controller;
+package smiteTroll.controller;
 
-import smiteTroll.Classes.God;
-import smiteTroll.Classes.Item;
-import smiteTroll.Classes.Relic;
+import smiteTroll.classes.God;
+import smiteTroll.classes.Item;
+import smiteTroll.classes.Relic;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Sessions {

@@ -1,4 +1,4 @@
-package smiteTroll.Controller;
+package smiteTroll.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -6,18 +6,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import smiteTroll.Classes.God;
-import smiteTroll.Classes.Item;
-import smiteTroll.Classes.Relic;
-import smiteTroll.Repositories.GodRepository;
-import smiteTroll.Repositories.ItemRepository;
-import smiteTroll.Repositories.RelicRepository;
+import smiteTroll.classes.God;
+import smiteTroll.classes.Item;
+import smiteTroll.classes.Relic;
+import smiteTroll.repositories.GodRepository;
+import smiteTroll.repositories.ItemRepository;
+import smiteTroll.repositories.RelicRepository;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -50,28 +47,6 @@ public class IndexController {
         sessions.setRelics(relics);
         getBuildForGod(m, sessions, god);
         return "index";
-    }
-
-    @RequestMapping(value = "/addData", method = RequestMethod.GET)
-    public String handleAddData(Model m, HttpSession session) {
-        return "addData";
-    }
-
-    @RequestMapping(value = "/addGodData", method = RequestMethod.POST)
-    public String handleGodAdding(Model m, HttpSession session, HttpServletRequest request) {
-        String name = request.getParameter("godName");
-        String type = request.getParameter("godType");
-        godRepository.addNewGodToDB(name, type);
-
-        return "addData";
-    }
-
-    @RequestMapping(value = "/removeGodData", method = RequestMethod.POST)
-    public String handleGodRemoving(Model m, HttpSession session, HttpServletRequest request) {
-        String name = request.getParameter("godName");
-        godRepository.deleteGodFromDB(name);
-
-        return "addData";
     }
 
     @RequestMapping(value = "/godReroll", method = RequestMethod.POST)

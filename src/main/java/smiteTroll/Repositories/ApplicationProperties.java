@@ -1,4 +1,4 @@
-package smiteTroll.Repositories;
+package smiteTroll.repositories;
 
 import java.io.IOException;
 import java.io.InputStream;

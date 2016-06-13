@@ -2,12 +2,10 @@ package smiteTroll;
 
 import org.junit.Assert;
 import org.junit.Test;
-import smiteTroll.Classes.God;
-import smiteTroll.Classes.Item;
-import smiteTroll.Repositories.ItemRepository;
+import smiteTroll.classes.God;
+import smiteTroll.classes.Item;
+import smiteTroll.repositories.ItemRepository;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 
 public class ItemRepositoryTest {

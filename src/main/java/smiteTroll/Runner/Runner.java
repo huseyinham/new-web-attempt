@@ -1,11 +1,11 @@
-package smiteTroll.Runner;
+package smiteTroll.runner;
 
-import smiteTroll.Classes.God;
-import smiteTroll.Classes.Relic;
-import smiteTroll.Repositories.GodRepository;
-import smiteTroll.Classes.Item;
-import smiteTroll.Repositories.ItemRepository;
-import smiteTroll.Repositories.RelicRepository;
+import smiteTroll.classes.God;
+import smiteTroll.classes.Relic;
+import smiteTroll.repositories.GodRepository;
+import smiteTroll.classes.Item;
+import smiteTroll.repositories.ItemRepository;
+import smiteTroll.repositories.RelicRepository;
 
 import java.io.IOException;
 import java.sql.SQLException;

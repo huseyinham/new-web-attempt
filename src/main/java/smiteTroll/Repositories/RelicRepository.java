@@ -1,8 +1,8 @@
-package smiteTroll.Repositories;
+package smiteTroll.repositories;
 
-import smiteTroll.Classes.Relic;
+import smiteTroll.classes.Relic;
+import smiteTroll.exceptions.AccessingDatabaseException;
 
-import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +35,7 @@ public class RelicRepository {
                 close(con);
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new AccessingDatabaseException("Cannot select relics from the database.");
         }
     }
 
@@ -61,7 +61,7 @@ public class RelicRepository {
                 close(con);
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new AccessingDatabaseException("Cannot retrieve single relic from the database.");
         }
     }
 
