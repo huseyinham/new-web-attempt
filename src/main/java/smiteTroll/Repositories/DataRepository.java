@@ -1,7 +1,12 @@
 package smiteTroll.repositories;
 
+import smiteTroll.classes.God;
+import smiteTroll.exceptions.AccessingDatabaseException;
 import smiteTroll.exceptions.ModifyDatabaseException;
+
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DataRepository {
 
@@ -22,7 +27,8 @@ public class DataRepository {
                 close(con);
             }
         } catch (SQLException e) {
-            throw new ModifyDatabaseException("Data not modified. Invalid data entered.");        }
+            throw new ModifyDatabaseException("Data not modified. Invalid data entered.");
+        }
     }
 
     public void deleteGodFromDB(String name) {
@@ -58,7 +64,8 @@ public class DataRepository {
                 close(con);
             }
         } catch (SQLException e) {
-            throw new ModifyDatabaseException("Data not modified. Invalid data entered.");        }
+            throw new ModifyDatabaseException("Data not modified. Invalid data entered.");
+        }
     }
 
     public void deleteItemFromDB(String name) {
@@ -75,7 +82,8 @@ public class DataRepository {
                 close(con);
             }
         } catch (SQLException e) {
-            throw new ModifyDatabaseException("Data not modified. Invalid data entered.");        }
+            throw new ModifyDatabaseException("Data not modified. Invalid data entered.");
+        }
     }
 
     public void addNewRelicToDB(String name) {
@@ -92,7 +100,8 @@ public class DataRepository {
                 close(con);
             }
         } catch (SQLException e) {
-            throw new ModifyDatabaseException("Data not modified. Invalid data entered.");        }
+            throw new ModifyDatabaseException("Data not modified. Invalid data entered.");
+        }
     }
 
     public void deleteRelicFromDB(String name) {
@@ -109,12 +118,69 @@ public class DataRepository {
                 close(con);
             }
         } catch (SQLException e) {
-            throw new ModifyDatabaseException("Data not modified. Invalid data entered.");        }
+            throw new ModifyDatabaseException("Data not modified. Invalid data entered.");
+        }
+    }
+
+    public List<String> getGodTypes() {
+        try {
+            Connection con = null;
+            Statement stmt = null;
+            try {
+                con = connectionCreator.getConnection();
+                List<String> godTypes = new ArrayList<>();
+                stmt = con.createStatement();
+                String query = "SELECT * FROM god_types";
+                ResultSet rs = stmt.executeQuery(query);
+                while (rs.next()) {
+                    String godTypeName = rs.getString("god_type_name");
+                    godTypes.add(godTypeName);
+                }
+                return godTypes;
+
+            } finally {
+                close(stmt);
+                close(con);
+            }
+        } catch (SQLException e) {
+            throw new AccessingDatabaseException("Cannot read god types from database.");
+        }
+    }
+
+    public List<String> getItemTypes() {
+        try {
+            Connection con = null;
+            Statement stmt = null;
+            try {
+                con = connectionCreator.getConnection();
+                List<String> itemTypes = new ArrayList<>();
+                stmt = con.createStatement();
+                String query = "SELECT * FROM item_types";
+                ResultSet rs = stmt.executeQuery(query);
+                while (rs.next()) {
+                    String itemTypeName = rs.getString("item_type_name");
+                    itemTypes.add(itemTypeName);
+                }
+                return itemTypes;
+
+            } finally {
+                close(stmt);
+                close(con);
+            }
+        } catch (SQLException e) {
+            throw new AccessingDatabaseException("Cannot read item types from database.");
+        }
     }
 
     private void close(PreparedStatement prepStmt) throws SQLException {
         if (prepStmt != null) {
             prepStmt.close();
+        }
+    }
+
+    private void close(Statement stmt) throws SQLException {
+        if (stmt != null) {
+            stmt.close();
         }
     }
 

@@ -1,7 +1,13 @@
-CREATE TABLE if NOT EXISTS type (
-    type_name VARCHAR(14) NOT NULL,
+CREATE TABLE if NOT EXISTS god_types (
+    god_type_name VARCHAR(14) NOT NULL,
 
-    PRIMARY KEY (type_name)
+    PRIMARY KEY (god_type_name)
+);
+
+CREATE TABLE if NOT EXISTS item_types (
+    item_type_name VARCHAR(14) NOT NULL,
+
+    PRIMARY KEY (item_type_name)
 );
 
 CREATE TABLE if NOT EXISTS god (
@@ -10,7 +16,7 @@ CREATE TABLE if NOT EXISTS god (
 
     PRIMARY KEY (god_name),
 
-    FOREIGN KEY (god_type) REFERENCES type(type_name)
+    FOREIGN KEY (god_type) REFERENCES god_types(god_type_name)
 );
 
 CREATE TABLE if NOT EXISTS item (
@@ -19,7 +25,7 @@ CREATE TABLE if NOT EXISTS item (
 
     PRIMARY KEY (item_name),
 
-    FOREIGN KEY (item_type) REFERENCES type(type_name)
+    FOREIGN KEY (item_type) REFERENCES item_types(item_type_name)
 );
 
 CREATE TABLE if NOT EXISTS relic (

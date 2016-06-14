@@ -1,4 +1,8 @@
-INSERT INTO type
+INSERT INTO god_types
+VALUES  ('physical'),
+        ('magical');
+
+INSERT INTO item_types
 VALUES  ('physical'),
         ('neutral'),
         ('magical'),

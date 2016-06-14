@@ -4,12 +4,14 @@ package smiteTroll.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import smiteTroll.repositories.DataRepository;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 
 @Controller
@@ -27,10 +29,12 @@ public class DataController {
     public String handleGodAdding(Model m, HttpSession session, HttpServletRequest request) {
         String name = request.getParameter("godName");
         String type = request.getParameter("godType");
-        if(name != "" && type != ""){
-            dataRepository.addNewGodToDB(name, type);
+        List<String> godTypes = dataRepository.getGodTypes();
+        for(String godType : godTypes){
+            if(StringUtils.hasText(name) && type.equals(godType.toString())) {
+                dataRepository.addNewGodToDB(name, type);
+            }
         }
-
         return "addData";
     }
 
@@ -47,8 +51,11 @@ public class DataController {
     public String handleItemAdding(Model m, HttpSession session, HttpServletRequest request) {
         String name = request.getParameter("itemName");
         String type = request.getParameter("itemType");
-        if(name != "" && type != "") {
-            dataRepository.addNewItemToDB(name, type);
+        List<String> itemTypes = dataRepository.getItemTypes();
+        for(String itemType : itemTypes){
+            if(StringUtils.hasText(name)&& type.equals(itemType.toString())) {
+                dataRepository.addNewItemToDB(name, type);
+            }
         }
         return "addData";
     }
@@ -65,7 +72,7 @@ public class DataController {
     @RequestMapping(value = "/addRelicData", method = RequestMethod.POST)
     public String handleRelicAdding(Model m, HttpSession session, HttpServletRequest request) {
         String name = request.getParameter("relicName");
-        if(name != "") {
+        if(StringUtils.hasText(name)) {
             dataRepository.addNewRelicToDB(name);
         }
         return "addData";
