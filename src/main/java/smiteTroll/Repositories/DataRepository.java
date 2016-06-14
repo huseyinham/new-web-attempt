@@ -1,6 +1,5 @@
 package smiteTroll.repositories;
 
-import smiteTroll.classes.God;
 import smiteTroll.exceptions.AccessingDatabaseException;
 import smiteTroll.exceptions.ModifyDatabaseException;
 
