@@ -3,15 +3,22 @@
 <html>
 <head>
     <title>SmiteTroll</title>
-    <link rel="stylesheet" href="<c:url value="/resources/css/style.css" />"
-    <link rel="stylesheet" href="<c:url value="/resources/font-awesome/css/font-awesome.css" />"
-    <link rel="stylesheet" href="<c:url value="/resources/font-awesome/**" />"
+    <link rel="stylesheet" href="<c:url value="/resources/font-awesome/css/font-awesome.css" />">
+    <link rel="stylesheet" href="<c:url value="/resources/css/style.css" />">
+    <link rel="stylesheet" href="<c:url value="/resources/font-awesome/css/font-awesome.min.css" />">
+    <link rel="stylesheet" href="<c:url value="/resources/font-awesome/**" />">
+    <link rel="stylesheet" href="<c:url value="/resources/font-awesome/*" />">
 
 </head>
 <body>
 
     <b><h1>SmiteTroll</h1></b>
     <b><p>Your Randomly Generated Build:</p></b>
+
+
+<div class="box"></div>
+<div class="underline"></div>
+<div class="line"></div>
 
 <div class = "god">
     <p class="godname">${godName}</p>
