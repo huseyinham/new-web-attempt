@@ -1,4 +1,4 @@
-package smiteTroll;
+package smiteTroll.repositories;
 
 import org.junit.Test;
 import smiteTroll.repositories.DataRepository;

@@ -7,6 +7,11 @@
             <form action="addGodData" method="POST">
                 <input type="text" name="godName"/>
                 <input type="text" name="godType"/>
+                <!-- <select id="godType" name="godType">
+                       <c:forEach var="godTypes" items="${godTypes.god_type_name}">
+                        <option value="${godTypes.god_type_name}">${god_type_name}</option>
+                     </c:forEach>
+                </select>-->
                 <button class="gAdderButton" type="submit"/><span>Add God</span></button>
             </form>
 

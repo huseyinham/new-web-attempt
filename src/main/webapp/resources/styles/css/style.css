@@ -1,5 +1,5 @@
 body {
-    background-color: #984b43;
+    background-color: #77c9d4;
 }
 
 .underline {
@@ -25,19 +25,15 @@ body {
 .box {
     width: 1920px;
     height: 1050px;
-    background-color: #233237;
-    /* box-shadow: 10px 10px 5px #D3D3D3; */
+    background-color: #0b3c5d;
     position: absolute;
     left: 0px;
     top: 0px;
     z-index: -1;
     outline: #000000 solid thin;
-    /* margin-left: 200px; */
 }
 
-h1,
-p,
-.godname {
+h1, p, .godname {
     font-family: "Times New Roman", Times, serif;
     color: white;
 }
@@ -101,8 +97,7 @@ p {
     margin-top: 20px;
 }
 
-.gbutton,
-.rfbutton {
+.gbutton, .rfbutton {
     width: 200px;
     padding: 15px 0px;
     text-align: center;
@@ -117,21 +112,18 @@ p {
     border: 2px solid #bdbdbd;
 }
 
-.gbutton:hover,
-.rfbutton:hover {
-    border: 2px solid #984b43;
+.gbutton:hover, .rfbutton:hover {
+    border: 2px solid #FFCC00;
 }
 
-button.gbutton span:after,
-button.rfbutton span:after {
+button.gbutton span:after, button.rfbutton span:after {
     content: '\f021';
     font-family: FontAwesome;
     padding-left: 10px;
     opacity: 0;
 }
 
-button.gbutton:hover span:after,
-button.rfbutton:hover span:after {
+button.gbutton:hover span:after, button.rfbutton:hover span:after {
     opacity: 1;
     transition: all 1s;
 }
@@ -159,7 +151,7 @@ button.rfbutton span:after {
 }
 
 .ibutton:hover {
-    border: 2px solid #984b43;
+    border: 2px solid #FFCC00;
 }
 
 button.ibutton span:after {
@@ -190,7 +182,7 @@ button.ibutton:hover span:after {
 }
 
 .rbutton:hover {
-    border: 2px solid #984b43;
+    border: 2px solid #FFCC00;
 }
 
 button.rbutton span:after {

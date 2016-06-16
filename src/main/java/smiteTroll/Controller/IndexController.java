@@ -12,6 +12,7 @@ import smiteTroll.classes.Relic;
 import smiteTroll.repositories.GodRepository;
 import smiteTroll.repositories.ItemRepository;
 import smiteTroll.repositories.RelicRepository;
+import smiteTroll.specifics.SpecificItemsForGods;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -42,6 +43,7 @@ public class IndexController {
         sessions.setRerollAmount(rerollAmount);
         God god = godRepository.getNewGod();
         List<Item> items = itemRepository.getItems(god.getGodType());
+        new SpecificItemsForGods(god, items).checkUniqueCircumstance();
         sessions.setItems(items);
         List<Relic> relics = relicRepository.getRelics();
         sessions.setRelics(relics);
@@ -60,6 +62,13 @@ public class IndexController {
         God god = godRepository.reRoll(sessions.getCurrentGod());
         rerollAmount --;
         sessions.setRerollAmount(rerollAmount);
+        new SpecificItemsForGods(god, sessions.getItems()).checkUniqueCircumstance();
+        if (sessions.getCurrentGod().getGodName().equals("Ratatoskr")){
+            List<Item> items = sessions.getItems();
+            Item item = itemRepository.reRoll(sessions.getCurrentGod(),items.get(0),sessions.getItems());
+            items.set(0, item);
+            sessions.setItems(items);
+        }
         getBuildForGod(m, sessions, god);
         return "index";
     }
@@ -73,9 +82,9 @@ public class IndexController {
             return "index";
         }
         int index = Integer.parseInt(request.getParameter("rerollIndex"));
-        Item item = itemRepository.reRoll(sessions.getCurrentGod(), sessions.getItems().get(index),sessions.getItems());
-        rerollAmount --;
         List<Item> items = sessions.getItems();
+        Item item = itemRepository.reRoll(sessions.getCurrentGod(), items.get(index),sessions.getItems());
+        rerollAmount --;
         items.set(index, item);
         sessions.setItems(items);
         getBuildForGod(m, sessions, sessions.getCurrentGod());
@@ -91,9 +100,9 @@ public class IndexController {
             return "index";
         }
         int index = Integer.parseInt(request.getParameter("rerollIndex"));
-        Relic relic = relicRepository.reRollRelic(sessions.getRelics());
-        rerollAmount --;
         List<Relic> relics = sessions.getRelics();
+        Relic relic = relicRepository.reRollRelic(relics);
+        rerollAmount --;
         relics.set(index, relic);
         sessions.setRelics(relics);
         getBuildForGod(m, sessions, sessions.getCurrentGod());
@@ -127,4 +136,5 @@ public class IndexController {
     public String handleRefreshRelicOne(Model m, HttpSession session) {
         return handleIndex(m, session);
     }
+
 }
