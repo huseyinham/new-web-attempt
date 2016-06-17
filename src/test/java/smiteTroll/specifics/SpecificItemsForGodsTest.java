@@ -8,7 +8,7 @@ import smiteTroll.classes.Item;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SpecificsTest {
+public class SpecificItemsForGodsTest {
 
     @Test
     public void testsSpecificItemsForSpecificGods(){

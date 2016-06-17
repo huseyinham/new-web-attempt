@@ -30,10 +30,11 @@ public class DataController {
         String name = request.getParameter("godName");
         String type = request.getParameter("godType");
         List<String> godTypes = dataRepository.getGodTypes();
-        for(String godType : godTypes){
-            if(StringUtils.hasText(name) && type.equals(godType.toString())) {
-                dataRepository.addNewGodToDB(name, type);
-            }
+        if (StringUtils.hasText(name) && godTypes.contains(type)) {
+            dataRepository.addNewGodToDB(name, type);
+        } else {
+            String message = "invalid type or no name provided";
+            m.addAttribute("error", message);
         }
         return "addData";
     }
@@ -41,7 +42,7 @@ public class DataController {
     @RequestMapping(value = "/removeGodData", method = RequestMethod.POST)
     public String handleGodRemoving(Model m, HttpSession session, HttpServletRequest request) {
         String name = request.getParameter("godName");
-        if(name != "") {
+        if (name != "") {
             dataRepository.deleteGodFromDB(name);
         }
         return "addData";
@@ -52,10 +53,11 @@ public class DataController {
         String name = request.getParameter("itemName");
         String type = request.getParameter("itemType");
         List<String> itemTypes = dataRepository.getItemTypes();
-        for(String itemType : itemTypes){
-            if(StringUtils.hasText(name)&& type.equals(itemType.toString())) {
-                dataRepository.addNewItemToDB(name, type);
-            }
+        if (StringUtils.hasText(name) && itemTypes.contains(type)){
+            dataRepository.addNewItemToDB(name, type);
+        } else {
+            String message = "invalid type or no name provided";
+            m.addAttribute("error", message);
         }
         return "addData";
     }
@@ -63,7 +65,7 @@ public class DataController {
     @RequestMapping(value = "/removeItemData", method = RequestMethod.POST)
     public String handleItemRemoving(Model m, HttpSession session, HttpServletRequest request) {
         String name = request.getParameter("itemName");
-        if(name != "") {
+        if (name != "") {
             dataRepository.deleteItemFromDB(name);
         }
         return "addData";
@@ -72,7 +74,7 @@ public class DataController {
     @RequestMapping(value = "/addRelicData", method = RequestMethod.POST)
     public String handleRelicAdding(Model m, HttpSession session, HttpServletRequest request) {
         String name = request.getParameter("relicName");
-        if(StringUtils.hasText(name)) {
+        if (StringUtils.hasText(name)) {
             dataRepository.addNewRelicToDB(name);
         }
         return "addData";
@@ -81,7 +83,7 @@ public class DataController {
     @RequestMapping(value = "/removeRelicData", method = RequestMethod.POST)
     public String handleRelicRemoving(Model m, HttpSession session, HttpServletRequest request) {
         String name = request.getParameter("relicName");
-        if(name != "") {
+        if (name != "") {
             dataRepository.deleteRelicFromDB(name);
         }
         return "addData";
@@ -93,7 +95,7 @@ public class DataController {
     }
 
     @RequestMapping(value = "/removeGodData", method = RequestMethod.GET)
-    public String handleRefreshRemoveGodData(Model m, HttpSession session)  {
+    public String handleRefreshRemoveGodData(Model m, HttpSession session) {
         return handleAddData(m, session);
     }
 
@@ -101,13 +103,14 @@ public class DataController {
     public String handleRefreshAddItemData(Model m, HttpSession session) {
         return handleAddData(m, session);
     }
+
     @RequestMapping(value = "/removeItemData", method = RequestMethod.GET)
     public String handleRefreshRemoveItemData(Model m, HttpSession session) {
         return handleAddData(m, session);
     }
 
     @RequestMapping(value = "/addRelicData", method = RequestMethod.GET)
-    public String handleRefreshAddRelicData(Model m, HttpSession session)  {
+    public String handleRefreshAddRelicData(Model m, HttpSession session) {
         return handleAddData(m, session);
     }
 

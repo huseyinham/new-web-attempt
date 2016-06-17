@@ -3,6 +3,13 @@
 <html>
 <head>
     <title>SmiteTroll Data Entry</title>
+
+    <c:if test="${not empty error}">
+      <div class="error">
+        Error: ${error}
+      </div>
+    </c:if>
+
     <div class="godData">
             <form action="addGodData" method="POST">
                 <input type="text" name="godName"/>
