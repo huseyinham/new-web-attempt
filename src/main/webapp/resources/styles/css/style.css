@@ -205,3 +205,9 @@ li {
 form {
     margin: 5px;
 }
+
+.error {
+    margin-left: 500px;
+    outline: solid red;
+    width: 275px;
+}
