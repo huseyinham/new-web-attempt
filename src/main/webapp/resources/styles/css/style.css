@@ -211,3 +211,7 @@ form {
     outline: solid red;
     width: 275px;
 }
+
+ul {
+    list-style-type: content:'\f054'
+}
