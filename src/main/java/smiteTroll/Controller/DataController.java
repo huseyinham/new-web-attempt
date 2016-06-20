@@ -53,7 +53,7 @@ public class DataController {
         String name = request.getParameter("itemName");
         String type = request.getParameter("itemType");
         List<String> itemTypes = dataRepository.getItemTypes();
-        if (StringUtils.hasText(name) && itemTypes.contains(type)){
+        if (StringUtils.hasText(name) && itemTypes.contains(type)) {
             dataRepository.addNewItemToDB(name, type);
         } else {
             String message = "invalid type or no name provided";
@@ -76,6 +76,9 @@ public class DataController {
         String name = request.getParameter("relicName");
         if (StringUtils.hasText(name)) {
             dataRepository.addNewRelicToDB(name);
+        } else {
+            String message = "No name provided";
+            m.addAttribute("error", message);
         }
         return "addData";
     }

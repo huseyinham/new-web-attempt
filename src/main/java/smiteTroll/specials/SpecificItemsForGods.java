@@ -1,4 +1,4 @@
-package smiteTroll.specifics;
+package smiteTroll.specials;
 
 import smiteTroll.classes.God;
 import smiteTroll.classes.Item;

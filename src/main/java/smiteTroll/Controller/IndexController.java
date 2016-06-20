@@ -12,7 +12,7 @@ import smiteTroll.classes.Relic;
 import smiteTroll.repositories.GodRepository;
 import smiteTroll.repositories.ItemRepository;
 import smiteTroll.repositories.RelicRepository;
-import smiteTroll.specifics.SpecificItemsForGods;
+import smiteTroll.specials.SpecificItemsForGods;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;

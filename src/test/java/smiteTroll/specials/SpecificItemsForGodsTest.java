@@ -1,4 +1,4 @@
-package smiteTroll.specifics;
+package smiteTroll.specials;
 
 import org.junit.Assert;
 import org.junit.Test;
