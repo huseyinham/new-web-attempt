@@ -51,38 +51,24 @@ public class DataRepository {
 
     public List<String> getGodTypes() {
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-        List<String> godsList = jdbcTemplate.query("SELECT * FROM god_types", new RowMapper<String>() {
+        List<String> godTypeList = jdbcTemplate.query("SELECT * FROM god_types", new RowMapper<String>() {
             @Override
             public String mapRow(ResultSet resultSet, int i) throws SQLException {
-                return null;
+                return resultSet.getString("god_type");
             }
         });
-        return godsList;
+        return godTypeList;
     }
 
     public List<String> getItemTypes() {
-        try {
-            Connection con = null;
-            Statement stmt = null;
-            try {
-                con = connectionCreator.getConnection();
-                List<String> itemTypes = new ArrayList<>();
-                stmt = con.createStatement();
-                String query = "SELECT * FROM item_types";
-                ResultSet rs = stmt.executeQuery(query);
-                while (rs.next()) {
-                    String itemTypeName = rs.getString("item_type_name");
-                    itemTypes.add(itemTypeName);
-                }
-                return itemTypes;
-
-            } finally {
-                close(stmt);
-                close(con);
+        JdbcTemplate jdbctemplate = new JdbcTemplate(dataSource);
+        List<String> itemTypeList = jdbctemplate.query("SELECT * FROM item_types", new RowMapper<String>() {
+            @Override
+            public String mapRow(ResultSet resultSet, int i) throws SQLException {
+                return resultSet.getString("item_type");
             }
-        } catch (SQLException e) {
-            throw new AccessingDatabaseException("Cannot read item types from database.");
-        }
+        });
+        return itemTypeList;
     }
 
     private void close(PreparedStatement prepStmt) throws SQLException {
