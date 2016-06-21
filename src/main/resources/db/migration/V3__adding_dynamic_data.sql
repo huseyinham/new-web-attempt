@@ -1,14 +1,3 @@
-INSERT INTO god_types
-VALUES  ('physical'),
-        ('magical');
-
-INSERT INTO item_types
-VALUES  ('physical'),
-        ('neutral'),
-        ('magical'),
-        ('physical_boots'),
-        ('magical_boots');
-
 INSERT INTO god (god_name, god_type)
 VALUES  ('Agni', 'magical'),
         ('Ah Muzen Cab', 'physical'),
