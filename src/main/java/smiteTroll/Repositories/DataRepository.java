@@ -1,8 +1,13 @@
 package smiteTroll.repositories;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
+import smiteTroll.classes.God;
 import smiteTroll.exceptions.AccessingDatabaseException;
-import smiteTroll.exceptions.ModifyDatabaseException;
 
+import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,139 +16,48 @@ public class DataRepository {
 
     private ConnectionCreator connectionCreator = new ConnectionCreator();
 
+    @Autowired
+    private DataSource dataSource;
+
     public void addNewGodToDB(String name, String type) {
-        try {
-            Connection con = null;
-            PreparedStatement prepStmt = null;
-            try {
-                con = connectionCreator.getConnection();
-                prepStmt = con.prepareStatement("INSERT INTO god (god_name, god_type) VALUES (?,?)");
-                prepStmt.setString(1, name);
-                prepStmt.setString(2, type);
-                prepStmt.executeUpdate();
-            } finally {
-                close(prepStmt);
-                close(con);
-            }
-        } catch (SQLException e) {
-            throw new ModifyDatabaseException("Data not modified. Invalid data entered.");
-        }
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        jdbcTemplate.update("INSERT INTO god (god_name, god_type) VALUES (?,?)", name, type);
     }
 
     public void deleteGodFromDB(String name) {
-        try {
-            Connection con = null;
-            PreparedStatement prepStmt = null;
-            try {
-                con = connectionCreator.getConnection();
-                prepStmt = con.prepareStatement("DELETE FROM god WHERE god_name = ?");
-                prepStmt.setString(1, name);
-                prepStmt.executeUpdate();
-            } finally {
-                close(prepStmt);
-                close(con);
-            }
-        } catch (SQLException e) {
-            throw new ModifyDatabaseException("Data not modified. Invalid data entered.");
-        }
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        jdbcTemplate.update("DELETE FROM god WHERE god_name = ?", name);
     }
 
     public void addNewItemToDB(String name, String type) {
-        try {
-            Connection con = null;
-            PreparedStatement prepStmt = null;
-            try {
-                con = connectionCreator.getConnection();
-                prepStmt = con.prepareStatement("INSERT INTO item (item_name, item_type) VALUES (?,?)");
-                prepStmt.setString(1, name);
-                prepStmt.setString(2, type);
-                prepStmt.executeUpdate();
-            } finally {
-                close(prepStmt);
-                close(con);
-            }
-        } catch (SQLException e) {
-            throw new ModifyDatabaseException("Data not modified. Invalid data entered.");
-        }
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        jdbcTemplate.update("INSERT INTO item (item_name, item_type) VALUES (?,?)", name, type);
     }
 
     public void deleteItemFromDB(String name) {
-        try {
-            Connection con = null;
-            PreparedStatement prepStmt = null;
-            try {
-                con = connectionCreator.getConnection();
-                prepStmt = con.prepareStatement("DELETE FROM item WHERE item_name = ?");
-                prepStmt.setString(1, name);
-                prepStmt.executeUpdate();
-            } finally {
-                close(prepStmt);
-                close(con);
-            }
-        } catch (SQLException e) {
-            throw new ModifyDatabaseException("Data not modified. Invalid data entered.");
-        }
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        jdbcTemplate.update("DELETE FROM item WHERE item_name = ?", name);
     }
 
     public void addNewRelicToDB(String name) {
-        try {
-            Connection con = null;
-            PreparedStatement prepStmt = null;
-            try {
-                con = connectionCreator.getConnection();
-                prepStmt = con.prepareStatement("INSERT INTO relic (relic_name) VALUES (?)");
-                prepStmt.setString(1, name);
-                prepStmt.executeUpdate();
-            } finally {
-                close(prepStmt);
-                close(con);
-            }
-        } catch (SQLException e) {
-            throw new ModifyDatabaseException("Data not modified. Invalid data entered.");
-        }
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        jdbcTemplate.update("INSERT INTO relic (relic_name) VALUES (?)", name);
     }
 
     public void deleteRelicFromDB(String name) {
-        try {
-            Connection con = null;
-            PreparedStatement prepStmt = null;
-            try {
-                con = connectionCreator.getConnection();
-                prepStmt = con.prepareStatement("DELETE FROM relic WHERE relic_name = ?");
-                prepStmt.setString(1, name);
-                prepStmt.executeUpdate();
-            } finally {
-                close(prepStmt);
-                close(con);
-            }
-        } catch (SQLException e) {
-            throw new ModifyDatabaseException("Data not modified. Invalid data entered.");
-        }
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        jdbcTemplate.update("DELETE FROM relic WHERE relic_name = ?", name);
     }
 
     public List<String> getGodTypes() {
-        try {
-            Connection con = null;
-            Statement stmt = null;
-            try {
-                con = connectionCreator.getConnection();
-                List<String> godTypes = new ArrayList<>();
-                stmt = con.createStatement();
-                String query = "SELECT * FROM god_types";
-                ResultSet rs = stmt.executeQuery(query);
-                while (rs.next()) {
-                    String godTypeName = rs.getString("god_type_name");
-                    godTypes.add(godTypeName);
-                }
-                return godTypes;
-
-            } finally {
-                close(stmt);
-                close(con);
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        List<String> godsList = jdbcTemplate.query("SELECT * FROM god_types", new RowMapper<String>() {
+            @Override
+            public String mapRow(ResultSet resultSet, int i) throws SQLException {
+                return null;
             }
-        } catch (SQLException e) {
-            throw new AccessingDatabaseException("Cannot read god types from database.");
-        }
+        });
+        return godsList;
     }
 
     public List<String> getItemTypes() {
