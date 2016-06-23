@@ -1,114 +1,74 @@
 package smiteTroll.repositories;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
+import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.ResultSetExtractor;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import smiteTroll.classes.God;
 import smiteTroll.repositories.GodRepository;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class GodRepositoryTest {
 
     private GodRepository godRepo = new GodRepository();
-    private God previousGod = new God("Thanatos", "physical");
+    private EmbeddedDatabase db;
+
+    @Before
+    public void setUp() {
+        db = new EmbeddedDatabaseBuilder()
+                .setType(EmbeddedDatabaseType.H2)
+                .addScripts("/db/migration/V1__initial_schema.sql", "/db/migration/V2__adding_static_data.sql")
+                .build();
+        godRepo.setDataSource(db);
+    }
+
+    @Test
+    public void testGodIsAbleToBeSelectedInitially() {
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(db);
+        jdbcTemplate.update("INSERT INTO god (god_name, god_type) VALUES ('initialGod', 'magical')");
+        God initialGod = godRepo.getNewGod();
+        String dbGodName = jdbcTemplate.queryForObject("SELECT god_name FROM god WHERE god_name = ?", new Object[]{"initialGod"}, String.class);
+        Assert.assertTrue(initialGod.getGodName().equals(dbGodName));
+        shutdown();
+    }
 
     @Test
     public void testPreviousGodNotReselected()  {
-        God selectedGod = godRepo.reRoll(previousGod);
-        Assert.assertTrue(!selectedGod.getGodName().equals(previousGod.getGodName()));
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(db);
+        jdbcTemplate.update("INSERT INTO god (god_name, god_type) VALUES ('initialGod', 'magical')");
+        jdbcTemplate.update("INSERT INTO god (god_name, god_type) VALUES ('newGod', 'magical')");
+        God dbInitialGod = jdbcTemplate.query("SELECT * FROM god WHERE god_name = ?", new Object[]{"initialGod"}, new GodExtractor());
+        God dbNewGod = jdbcTemplate.query("SELECT * FROM god WHERE god_name = ?", new Object[]{"newGod"}, new GodExtractor());
+        God selectedGod = godRepo.reRoll(dbInitialGod);
+        Assert.assertTrue(selectedGod.getGodName().equals(dbNewGod.getGodName()));
+        Assert.assertTrue(!selectedGod.getGodName().equals(dbInitialGod.getGodName()));
+        shutdown();
     }
 
-    @Test
-    public void testSelectedGodIsInTheList()  {
-        God selectedGod = godRepo.reRoll(previousGod);
-        List<God> listOfGods = getPotentialRerollableGods();
-        Boolean found = false;
-        for (God god : listOfGods) {
-            if (selectedGod.getGodName().equals(god.getGodName())) {
-                found = true;
-            }
+    private void shutdown() {
+        db.shutdown();
+    }
+
+    private static class GodExtractor implements ResultSetExtractor<God> {
+        @Override
+        public God extractData(ResultSet resultSet) throws SQLException, DataAccessException {
+            resultSet.next();
+            return asGod(resultSet);
         }
-        Assert.assertTrue(found);
-    }
 
-    private List<God> getPotentialRerollableGods() {
-        List<God> listOfGods = new ArrayList<>();
-        listOfGods.add(new God("Agni", "magical"));
-        listOfGods.add(new God("Ah Muzen Cab", "physical"));
-        listOfGods.add(new God("Amaterasu", "physical"));
-        listOfGods.add(new God("Ah Puch", "magical"));
-        listOfGods.add(new God("Anhur", "physical"));
-        listOfGods.add(new God("Anubis", "magical"));
-        listOfGods.add(new God("Ao Kuang", "magical"));
-        listOfGods.add(new God("Aphrodite", "magical"));
-        listOfGods.add(new God("Apollo", "physical"));
-        listOfGods.add(new God("Arachne", "physical"));
-        listOfGods.add(new God("Ares", "magical"));
-        listOfGods.add(new God("Artemis", "physical"));
-        listOfGods.add(new God("Athena", "magical"));
-        listOfGods.add(new God("Awilix", "physical"));
-        listOfGods.add(new God("Bacchus", "magical"));
-        listOfGods.add(new God("Bakasura", "physical"));
-        listOfGods.add(new God("Bastet", "physical"));
-        listOfGods.add(new God("Bellona", "physical"));
-        listOfGods.add(new God("Cabrakan", "magical"));
-        listOfGods.add(new God("Chaac", "physical"));
-        listOfGods.add(new God("Change", "magical"));
-        listOfGods.add(new God("Chiron", "physical"));
-        listOfGods.add(new God("Chronos", "magical"));
-        listOfGods.add(new God("Cupid", "physical"));
-        listOfGods.add(new God("Fenrir", "physical"));
-        listOfGods.add(new God("Freya", "magical"));
-        listOfGods.add(new God("Geb", "magical"));
-        listOfGods.add(new God("Guan Yu", "physical"));
-        listOfGods.add(new God("Hades", "magical"));
-        listOfGods.add(new God("He Bo", "magical"));
-        listOfGods.add(new God("Hel", "magical"));
-        listOfGods.add(new God("Hercules", "physical"));
-        listOfGods.add(new God("Hou Yi", "physical"));
-        listOfGods.add(new God("Hun Batz", "physical"));
-        listOfGods.add(new God("Isis", "magical"));
-        listOfGods.add(new God("Janus", "magical"));
-        listOfGods.add(new God("Jing Wei", "physical"));
-        listOfGods.add(new God("Kali", "physical"));
-        listOfGods.add(new God("Khepri", "magical"));
-        listOfGods.add(new God("Kukulkan", "magical"));
-        listOfGods.add(new God("Kumbhakarna", "magical"));
-        listOfGods.add(new God("Loki", "physical"));
-        listOfGods.add(new God("Medusa", "physical"));
-        listOfGods.add(new God("Mercury", "physical"));
-        listOfGods.add(new God("Ne Zha", "physical"));
-        listOfGods.add(new God("Neith", "physical"));
-        listOfGods.add(new God("Nemesis", "physical"));
-        listOfGods.add(new God("Nox", "magical"));
-        listOfGods.add(new God("Nu Wa", "magical"));
-        listOfGods.add(new God("Odin", "physical"));
-        listOfGods.add(new God("Osiris", "physical"));
-        listOfGods.add(new God("Poseidon", "magical"));
-        listOfGods.add(new God("Ra", "magical"));
-        listOfGods.add(new God("Raijin", "magical"));
-        listOfGods.add(new God("Rama", "physical"));
-        listOfGods.add(new God("Ratatoskr", "physical"));
-        listOfGods.add(new God("Ravana", "physical"));
-        listOfGods.add(new God("Scylla", "magical"));
-        listOfGods.add(new God("Serqet", "physical"));
-        listOfGods.add(new God("Skadi", "physical"));
-        listOfGods.add(new God("Sobek", "magical"));
-        listOfGods.add(new God("Sol", "magical"));
-        listOfGods.add(new God("Sun Wukong", "physical"));
-        listOfGods.add(new God("Susano", "physical"));
-        listOfGods.add(new God("Sylvanus", "magical"));
-        listOfGods.add(new God("Thor", "physical"));
-        listOfGods.add(new God("Tyr", "physical"));
-        listOfGods.add(new God("Ullr", "physical"));
-        listOfGods.add(new God("Vamana", "physical"));
-        listOfGods.add(new God("Vulcan", "magical"));
-        listOfGods.add(new God("Xbalanque", "physical"));
-        listOfGods.add(new God("Xing Tian", "magical"));
-        listOfGods.add(new God("Ymir", "magical"));
-        listOfGods.add(new God("Zeus", "magical"));
-        listOfGods.add(new God("Zhong Kui", "magical"));
-        return listOfGods;
+        private static God asGod(ResultSet rs) throws SQLException {
+            String godName = rs.getString("god_name");
+            String godType = rs.getString("god_type");
+            return new God(godName, godType);
+        }
     }
 }

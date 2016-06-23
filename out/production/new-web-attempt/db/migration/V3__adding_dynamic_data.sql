@@ -1,10 +1,3 @@
-INSERT INTO type
-VALUES  ('physical'),
-        ('neutral'),
-        ('magical'),
-        ('physical_boots'),
-        ('magical_boots');
-
 INSERT INTO god (god_name, god_type)
 VALUES  ('Agni', 'magical'),
         ('Ah Muzen Cab', 'physical'),
@@ -29,6 +22,7 @@ VALUES  ('Agni', 'magical'),
         ('Chiron', 'physical'),
         ('Chronos', 'magical'),
         ('Cupid', 'physical'),
+        ('Fafnir', 'magical'),
         ('Fenrir', 'physical'),
         ('Freya', 'magical'),
         ('Geb', 'magical'),
