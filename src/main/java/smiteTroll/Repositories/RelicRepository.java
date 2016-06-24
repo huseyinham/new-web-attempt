@@ -1,85 +1,59 @@
 package smiteTroll.repositories;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.ResultSetExtractor;
+import org.springframework.jdbc.core.RowMapper;
 import smiteTroll.classes.Relic;
-import smiteTroll.exceptions.AccessingDatabaseException;
 
-import java.sql.*;
-import java.util.ArrayList;
+import javax.sql.DataSource;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 public class RelicRepository {
 
-    private ConnectionCreator connectionCreator = new ConnectionCreator();
+    @Autowired
+    private DataSource dataSource;
+
+    public void setDataSource(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 
     public List<Relic> getRelics() {
-        try {
-            Connection con = null;
-            Statement stmt = null;
-
-            try {
-                con = connectionCreator.getConnection();
-
-                List<Relic> relicList = new ArrayList<>();
-                stmt = con.createStatement();
-                String query = "SELECT * FROM relic ORDER BY RAND() LIMIT 2";
-
-                ResultSet rs = stmt.executeQuery(query);
-                while (rs.next()) {
-                    String relicName = rs.getString("relic_name");
-                    relicList.add(new Relic(relicName));
-                }
-                return relicList;
-
-            } finally {
-                close(stmt);
-                close(con);
-            }
-        } catch (SQLException e) {
-            throw new AccessingDatabaseException("Cannot select relics from the database.");
-        }
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        return jdbcTemplate.query("SELECT * FROM relic ORDER BY RAND() LIMIT 2", new Object[]{}, new RelicListRowMapExtractor());
     }
 
     public Relic reRollRelic(List<Relic> relics) {
-        try {
-            Connection con = null;
-            PreparedStatement prepStmt = null;
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        return jdbcTemplate.query("SELECT * FROM relic WHERE relic_name NOT IN (?,?) ORDER BY RAND() LIMIT 1",
+                new Object[]{
+                        relics.get(0).getRelicName(),
+                        relics.get(1).getRelicName()},
+                new RelicExtractor());
+    }
 
-            try {
-                con = connectionCreator.getConnection();
+    private static class RelicExtractor implements ResultSetExtractor<Relic> {
 
-                prepStmt = con.prepareStatement("SELECT * FROM relic WHERE relic_name NOT IN (?,?) ORDER BY RAND() LIMIT 1");
-                prepStmt.setString(1, relics.get(0).getRelicName());
-                prepStmt.setString(2, relics.get(1).getRelicName());
-
-                ResultSet rs = prepStmt.executeQuery();
-                rs.next();
-                String relicName = rs.getString("relic_name");
-                return new Relic(relicName);
-
-            } finally {
-                close(prepStmt);
-                close(con);
-            }
-        } catch (SQLException e) {
-            throw new AccessingDatabaseException("Cannot retrieve single relic from the database.");
+        @Override
+        public Relic extractData(ResultSet resultSet) throws SQLException, DataAccessException {
+            resultSet.next();
+            return asRelic(resultSet);
         }
     }
 
-    private void close(Statement stmt) throws SQLException {
-        if (stmt != null) {
-            stmt.close();
+    private static class RelicListRowMapExtractor implements RowMapper<Relic> {
+
+        @Override
+        public Relic mapRow(ResultSet resultSet, int i) throws SQLException {
+            return asRelic(resultSet);
         }
     }
 
-    private void close(PreparedStatement prepStmt) throws SQLException {
-        if (prepStmt != null) {
-            prepStmt.close();
-        }
-    }
-
-    private void close(Connection con) throws SQLException {
-        if (con != null) {
-            con.close();
-        }
+    private static Relic asRelic(ResultSet resultset) throws SQLException {
+        String relicName = resultset.getString("relic_name");
+        return new Relic(relicName);
     }
 }

@@ -16,6 +16,8 @@ public class ItemRepositoryTest {
 
     private ItemRepository itemRepo = new ItemRepository();
     private EmbeddedDatabase db;
+    private static final God physicalGod = new God("PhysicalGod", "physical");
+    private static final God magicalGod = new God("MagicalGod", "magical");
 
     @Before
     public void setUp() {
@@ -41,29 +43,48 @@ public class ItemRepositoryTest {
     }
 
     @Test
-    public void testingRerollWithBoots() {
-        createDbItemsForMagicalTesting();
-        God god = new God("Anubis", "magical");
-        List<Item> itemList = itemRepo.getItems("magical");
+    public void testingRerollWithPhysicalBoots() {
+        createDbItemsForPhysicalTesting();
+        List<Item> itemList = itemRepo.getItems("physical");
         Item reRolledItem = itemList.get(0);
-        Item newItem = itemRepo.reRoll(god, reRolledItem, itemList);
+        Item newItem = itemRepo.reRoll(physicalGod, reRolledItem, itemList);
         Assert.assertTrue(!newItem.getItemName().equals(reRolledItem.getItemName()));
         Assert.assertTrue(newItem.getItemType().equals(reRolledItem.getItemType()));
         shutdown();
     }
 
-/*    @Test
-    public void testingRerollWithNormalItem() {
-        God god = new God("Anubis", "magical");
+    @Test
+    public void testingRerollWithMagicalBoots() {
+        createDbItemsForMagicalTesting();
+        List<Item> itemList = itemRepo.getItems("magical");
+        Item reRolledItem = itemList.get(0);
+        Item newItem = itemRepo.reRoll(magicalGod, reRolledItem, itemList);
+        Assert.assertTrue(!newItem.getItemName().equals(reRolledItem.getItemName()));
+        Assert.assertTrue(newItem.getItemType().equals(reRolledItem.getItemType()));
+        shutdown();
+    }
+
+    @Test
+    public void testingRerollWithPhysicalGod() {
+        createDbItemsForPhysicalTesting();
+        List<Item> itemList = itemRepo.getItems("physical");
+        Item reRolledItem = itemList.get(1);
+        Item newItem = itemRepo.reRoll(physicalGod, reRolledItem, itemList);
+        Assert.assertTrue(!newItem.getItemName().equals(reRolledItem.getItemName()));
+        Assert.assertTrue(newItem.getItemType().equals(physicalGod.getGodType()) || newItem.getItemType().equals("neutral"));
+        shutdown();
+    }
+
+    @Test
+    public void testingRerollWithMagicalGod() {
+        createDbItemsForMagicalTesting();
         List<Item> itemList = itemRepo.getItems("magical");
         Item reRolledItem = itemList.get(1);
-        Item newItem = itemRepo.reRoll(god, reRolledItem, itemList);
+        Item newItem = itemRepo.reRoll(magicalGod, reRolledItem, itemList);
         Assert.assertTrue(!newItem.getItemName().equals(reRolledItem.getItemName()));
-        Assert.assertTrue(newItem.getItemType().equals(god.getGodType()) || newItem.getItemType().equals("neutral"));
-        for (Item item : itemList) {
-            Assert.assertTrue(!newItem.getItemName().equals(item.getItemName()));
-        }
-    }*/
+        Assert.assertTrue(newItem.getItemType().equals(magicalGod.getGodType()) || newItem.getItemType().equals("neutral"));
+        shutdown();
+    }
 
     private void assertValidItemsForGod(String type) {
         List<Item> itemList = itemRepo.getItems(type);
@@ -80,9 +101,12 @@ public class ItemRepositoryTest {
         jdbcTemplate.update("INSERT INTO item (item_name, item_type) VALUES ('itemThree', 'magical')");
         jdbcTemplate.update("INSERT INTO item (item_name, item_type) VALUES ('itemFour', 'neutral')");
         jdbcTemplate.update("INSERT INTO item (item_name, item_type) VALUES ('itemFive', 'neutral')");
-        jdbcTemplate.update("INSERT INTO item (item_name, item_type) VALUES ('itemSix', 'magical_boots')");
-        jdbcTemplate.update("INSERT INTO item (item_name, item_type) VALUES ('itemSeven', 'magical_boots')");
-        jdbcTemplate.update("INSERT INTO item (item_name, item_type) VALUES ('nonValid', 'physical')");
+        jdbcTemplate.update("INSERT INTO item (item_name, item_type) VALUES ('itemSix', 'magical')");
+        jdbcTemplate.update("INSERT INTO item (item_name, item_type) VALUES ('itemSeven', 'neutral')");
+        jdbcTemplate.update("INSERT INTO item (item_name, item_type) VALUES ('itemEight', 'magical_boots')");
+        jdbcTemplate.update("INSERT INTO item (item_name, item_type) VALUES ('itemNine', 'magical_boots')");
+        jdbcTemplate.update("INSERT INTO item (item_name, item_type) VALUES ('nonValid', 'physical_boots')");
+        jdbcTemplate.update("INSERT INTO item (item_name, item_type) VALUES ('nonValidTwo', 'physical')");
     }
 
     private void createDbItemsForPhysicalTesting() {
@@ -92,9 +116,12 @@ public class ItemRepositoryTest {
         jdbcTemplate.update("INSERT INTO item (item_name, item_type) VALUES ('itemThree', 'neutral')");
         jdbcTemplate.update("INSERT INTO item (item_name, item_type) VALUES ('itemFour', 'physical')");
         jdbcTemplate.update("INSERT INTO item (item_name, item_type) VALUES ('itemFive', 'physical')");
-        jdbcTemplate.update("INSERT INTO item (item_name, item_type) VALUES ('itemSix', 'physical_boots')");
-        jdbcTemplate.update("INSERT INTO item (item_name, item_type) VALUES ('itemSeven', 'physical_boots')");
+        jdbcTemplate.update("INSERT INTO item (item_name, item_type) VALUES ('itemSix', 'physical')");
+        jdbcTemplate.update("INSERT INTO item (item_name, item_type) VALUES ('itemSeven', 'neutral')");
+        jdbcTemplate.update("INSERT INTO item (item_name, item_type) VALUES ('itemEight', 'physical_boots')");
+        jdbcTemplate.update("INSERT INTO item (item_name, item_type) VALUES ('itemNine', 'physical_boots')");
         jdbcTemplate.update("INSERT INTO item (item_name, item_type) VALUES ('nonValid', 'magical_boots')");
+        jdbcTemplate.update("INSERT INTO item (item_name, item_type) VALUES ('nonValidTwo', 'magical')");
     }
 
     private void shutdown() {

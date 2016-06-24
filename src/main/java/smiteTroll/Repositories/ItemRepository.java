@@ -7,14 +7,12 @@ import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import smiteTroll.classes.God;
 import smiteTroll.classes.Item;
-import smiteTroll.exceptions.AccessingDatabaseException;
 
 import javax.sql.DataSource;
-import java.sql.*;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class ItemRepository {
 
@@ -37,22 +35,22 @@ public class ItemRepository {
         if (rerolledItem.getItemType().contains("boots")) {
             return jdbcTemplate.query("SELECT * FROM item WHERE item_type = ? AND item_name NOT IN (?,?,?,?,?,?) ORDER BY RAND() LIMIT 1",
                     new Object[]{god.getGodType() + "_boots",
-                            alreadySelectedItems.get(0),
-                            alreadySelectedItems.get(1),
-                            alreadySelectedItems.get(2),
-                            alreadySelectedItems.get(3),
-                            alreadySelectedItems.get(4),
-                            alreadySelectedItems.get(5)},
+                            alreadySelectedItems.get(0).getItemName(),
+                            alreadySelectedItems.get(1).getItemName(),
+                            alreadySelectedItems.get(2).getItemName(),
+                            alreadySelectedItems.get(3).getItemName(),
+                            alreadySelectedItems.get(4).getItemName(),
+                            alreadySelectedItems.get(5).getItemName()},
                     new ItemExtractor());
         } else {
             return jdbcTemplate.query("SELECT * FROM item WHERE (item_type = ? OR item_type = 'neutral') AND item_name NOT IN (?,?,?,?,?,?) ORDER BY RAND() LIMIT 1",
                     new Object[]{god.getGodType(),
-                            alreadySelectedItems.get(0),
-                            alreadySelectedItems.get(1),
-                            alreadySelectedItems.get(2),
-                            alreadySelectedItems.get(3),
-                            alreadySelectedItems.get(4),
-                            alreadySelectedItems.get(5)},
+                            alreadySelectedItems.get(0).getItemName(),
+                            alreadySelectedItems.get(1).getItemName(),
+                            alreadySelectedItems.get(2).getItemName(),
+                            alreadySelectedItems.get(3).getItemName(),
+                            alreadySelectedItems.get(4).getItemName(),
+                            alreadySelectedItems.get(5).getItemName()},
                     new ItemExtractor());
         }
     }
