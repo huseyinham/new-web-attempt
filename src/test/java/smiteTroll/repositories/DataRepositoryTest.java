@@ -28,8 +28,8 @@ public class DataRepositoryTest {
 
     @Test
     public void testValidGodCanBeAddedToDB() {
-        God god = new God("God", "magical");
-        dataRepo.addNewGodToDB(god.getGodName(), god.getGodType());
+        God god = new God("God", "magical", "");
+        dataRepo.addNewGodToDB(god.getGodName(), god.getGodType(), god.getGodImage());
         JdbcTemplate jdbcTemplate = new JdbcTemplate(db);
         int count = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM god WHERE god_name = ?", new Object[]{"God"}, Integer.class);
         Assert.assertEquals(1, count);
@@ -38,10 +38,10 @@ public class DataRepositoryTest {
 
     @Test
     public void testInvalidGodTypeCannotBeAddedToDB() {
-        God god = new God("God", "invalid");
+        God god = new God("God", "invalid", "");
         boolean exceptionThrown = false;
         try {
-            dataRepo.addNewGodToDB(god.getGodName(), god.getGodType());
+            dataRepo.addNewGodToDB(god.getGodName(), god.getGodType(), god.getGodImage());
         } catch (DataIntegrityViolationException e) {
             exceptionThrown = true;
         } finally {
@@ -52,10 +52,10 @@ public class DataRepositoryTest {
 
     @Test
     public void testInvalidGodTypeLengthCannotBeAddedToDB() {
-        God god = new God("God", "invalidType");
+        God god = new God("God", "invalidType", "");
         boolean exceptionThrown = false;
         try {
-            dataRepo.addNewGodToDB(god.getGodName(), god.getGodType());
+            dataRepo.addNewGodToDB(god.getGodName(), god.getGodType(), god.getGodImage());
         } catch (Exception e) {
             exceptionThrown = true;
         } finally {
@@ -66,8 +66,8 @@ public class DataRepositoryTest {
 
     @Test
     public void testValidItemCanBeAddedToDB() {
-        Item item = new Item("Item", "magical");
-        dataRepo.addNewItemToDB(item.getItemName(), item.getItemType());
+        Item item = new Item("Item", "magical", "");
+        dataRepo.addNewItemToDB(item.getItemName(), item.getItemType(), item.getItemImage());
         JdbcTemplate jdbcTemplate = new JdbcTemplate(db);
         int count = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM item WHERE item_name = ?", new Object[]{"Item"}, Integer.class);
         Assert.assertEquals(1, count);
@@ -76,10 +76,10 @@ public class DataRepositoryTest {
 
     @Test
     public void testInvalidItemTypeCannotBeAddedToDB() {
-        Item item = new Item("Item", "invalid");
+        Item item = new Item("Item", "invalid", "");
         boolean exceptionThrown = false;
         try {
-            dataRepo.addNewItemToDB(item.getItemName(), item.getItemType());
+            dataRepo.addNewItemToDB(item.getItemName(), item.getItemType(), item.getItemImage());
         } catch (DataIntegrityViolationException e) {
             exceptionThrown = true;
         } finally {
@@ -90,10 +90,10 @@ public class DataRepositoryTest {
 
     @Test
     public void testInvalidItemTypeLengthCannotBeAddedToDB() {
-        Item item = new Item("Item", "invalidType");
+        Item item = new Item("Item", "invalidType", "");
         boolean exceptionThrown = false;
         try {
-            dataRepo.addNewItemToDB(item.getItemName(), item.getItemType());
+            dataRepo.addNewItemToDB(item.getItemName(), item.getItemType(), item.getItemImage());
         } catch (Exception e) {
             exceptionThrown = true;
         } finally {
@@ -104,8 +104,8 @@ public class DataRepositoryTest {
 
     @Test
     public void testValidRelicCanBeAddedToDB() {
-        Relic relic = new Relic("Relic");
-        dataRepo.addNewRelicToDB(relic.getRelicName());
+        Relic relic = new Relic("Relic", "");
+        dataRepo.addNewRelicToDB(relic.getRelicName(), relic.getRelicImage());
         JdbcTemplate jdbcTemplate = new JdbcTemplate(db);
         int count = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM relic WHERE relic_name = ?", new Object[]{"Relic"}, Integer.class);
         Assert.assertEquals(1, count);

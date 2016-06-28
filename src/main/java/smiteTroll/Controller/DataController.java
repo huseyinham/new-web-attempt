@@ -29,9 +29,10 @@ public class DataController {
     public String handleGodAdding(Model m, HttpSession session, HttpServletRequest request) {
         String name = request.getParameter("godName");
         String type = request.getParameter("godType");
+        String image = request.getParameter("godImage");
         List<String> godTypes = dataRepository.getGodTypes();
         if (StringUtils.hasText(name) && godTypes.contains(type)) {
-            dataRepository.addNewGodToDB(name, type);
+            dataRepository.addNewGodToDB(name, type, image);
         } else {
             String message = "invalid type or no name provided";
             m.addAttribute("error", message);
@@ -52,9 +53,10 @@ public class DataController {
     public String handleItemAdding(Model m, HttpSession session, HttpServletRequest request) {
         String name = request.getParameter("itemName");
         String type = request.getParameter("itemType");
+        String image = request.getParameter("itemImage");
         List<String> itemTypes = dataRepository.getItemTypes();
         if (StringUtils.hasText(name) && itemTypes.contains(type)) {
-            dataRepository.addNewItemToDB(name, type);
+            dataRepository.addNewItemToDB(name, type, image);
         } else {
             String message = "invalid type or no name provided";
             m.addAttribute("error", message);
@@ -74,8 +76,9 @@ public class DataController {
     @RequestMapping(value = "/addRelicData", method = RequestMethod.POST)
     public String handleRelicAdding(Model m, HttpSession session, HttpServletRequest request) {
         String name = request.getParameter("relicName");
+        String image = request.getParameter("relicImage");
         if (StringUtils.hasText(name)) {
-            dataRepository.addNewRelicToDB(name);
+            dataRepository.addNewRelicToDB(name, image);
         } else {
             String message = "No name provided";
             m.addAttribute("error", message);

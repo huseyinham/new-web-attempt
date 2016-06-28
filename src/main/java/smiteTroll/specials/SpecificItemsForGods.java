@@ -16,7 +16,7 @@ public class SpecificItemsForGods {
 
     public void checkUniqueCircumstance() {
         if (god.getGodName().equals("Ratatoskr")) {
-            Item acornOfYggdrasil = new Item("Acorn of Yggdrasil", "physical_boots");
+            Item acornOfYggdrasil = new Item("Acorn of Yggdrasil", "physical_boots", "resources/itemImages/OpalAcorn_T3.png");
             items.set(0, acornOfYggdrasil);
         }
     }

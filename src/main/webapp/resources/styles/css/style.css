@@ -6,10 +6,9 @@ body {
     width: 200px;
     height: 2px;
     background-color: #FFCC00;
-    position: absolute;
-    left: 58px;
-    top: 199px;
-    margin-left: 600px;
+    position: relative;
+    left: 7px;
+    top: 0px;
 }
 
 .line {
@@ -17,9 +16,8 @@ body {
     height: 2px;
     background-color: #FFCC00;
     position: absolute;
-    left: 2px;
+    left: 7px;
     top: 70px;
-    margin-left: 600px;
 }
 
 .box {
@@ -40,39 +38,35 @@ h1, p, .godname {
 
 h1 {
     font-size: 40px;
-    margin-left: 600px;
     color: white;
 }
 
 p {
     font-size: 32px;
-    margin-left: 650px;
 }
 
 .refresh {
-    margin-left: 650px;
+   float: none;
 }
 
 .god {
-    margin-left: 650px;
+
 }
 
 .godname {
     font-size: 20px;
-    margin-left: auto;
 }
 
 .itemlist {
     width: 300px;
     display: inline-block;
     font-size: 20px;
-    margin-left: 615px;
 }
 
 .itembuttons {
     width: auto;
     vertical-align: top;
-    margin: 10px 40px;
+    margin: 34px 40px;
     display: inline-block;
 }
 
@@ -80,15 +74,14 @@ p {
     width: 165px;
     display: inline-block;
     font-size: 20px;
-    margin-left: 615px;
 }
 
 .relicbuttons {
-    width: auto;
+    /* width: auto; */
     display: inline-block;
-    height: 70px;
+    /* height: 69px; */
     vertical-align: top;
-    margin: 15px 20px;
+    margin: 50px 40px;
 }
 
 .relicButton {
@@ -98,13 +91,12 @@ p {
 }
 
 .gbutton, .rfbutton {
-    width: 200px;
-    padding: 15px 0px;
+    width: 236px;
+    height: 68px;
+    padding: -1px 0px;
     text-align: center;
-    text-decoration: none;
     display: inline-block;
     font-size: 16px;
-    margin: 4px 2px;
     cursor: pointer;
     background-color: white;
     color: white;
@@ -137,12 +129,12 @@ button.rfbutton span:after {
 
 .ibutton {
     width: 100px;
-    padding: 5px 0px;
+    height: 40px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
-    margin: 4px 2px;
+    margin: 10px 2px;
     cursor: pointer;
     background-color: white;
     color: white;
@@ -198,7 +190,8 @@ button.rbutton:hover span:after {
 }
 
 li {
-    margin: 22px;
+    height: 10px;
+    margin: 50px;
     color: white;
 }
 
@@ -207,11 +200,49 @@ form {
 }
 
 .error {
-    margin-left: 500px;
     outline: solid red;
     width: 275px;
 }
 
 ul {
-    list-style-type: content:'\f054'
+    list-style-type: content:'\f054';
+}
+
+.god_image {
+    height: 420px;
+    border: solid;
+    float: left;
+}
+
+.disclaimer {
+    font-size: 11px;
+    color: black;
+}
+
+.item_images {
+    float: left;
+}
+
+.item_image {
+    width: 65px;
+    border: solid;
+    float: none;
+    display: block;
+}
+
+.item_form_buttons {   
+    margin: 0px;
+}
+
+.godReroll {
+    float: left;
+}
+
+.relic_images {
+    float: left;
+}
+
+.relic_image {
+    width: 65px;
+    border: solid;
 }

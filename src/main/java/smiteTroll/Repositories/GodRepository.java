@@ -30,12 +30,6 @@ public class GodRepository {
         return jdbcTemplate.query("SELECT * FROM god WHERE god_name != ? AND god_type = ? ORDER BY RAND() LIMIT 1", new Object[]{previousGod.getGodName(), previousGod.getGodType()}, new GodExtractor());
     }
 
-    private static God asGod(ResultSet rs) throws SQLException {
-        String godName = rs.getString("god_name");
-        String godType = rs.getString("god_type");
-        return new God(godName, godType);
-    }
-
     private static class GodExtractor implements ResultSetExtractor<God> {
         @Override
         public God extractData(ResultSet resultSet) throws SQLException, DataAccessException {
@@ -46,7 +40,8 @@ public class GodRepository {
         private static God asGod(ResultSet rs) throws SQLException {
             String godName = rs.getString("god_name");
             String godType = rs.getString("god_type");
-            return new God(godName, godType);
+            String godImage = rs.getString("god_image");
+            return new God(godName, godType, godImage);
         }
     }
 }

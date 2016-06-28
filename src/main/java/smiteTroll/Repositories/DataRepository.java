@@ -17,9 +17,9 @@ public class DataRepository {
         this.dataSource = dataSource;
     }
 
-    public void addNewGodToDB(String name, String type) {
+    public void addNewGodToDB(String name, String type, String image) {
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-        jdbcTemplate.update("INSERT INTO god (god_name, god_type) VALUES (?,?)", name, type);
+        jdbcTemplate.update("INSERT INTO god (god_name, god_type, god_image) VALUES (?,?,?)", name, type, image);
     }
 
     public void deleteGodFromDB(String name) {
@@ -27,9 +27,9 @@ public class DataRepository {
         jdbcTemplate.update("DELETE FROM god WHERE god_name = ?", name);
     }
 
-    public void addNewItemToDB(String name, String type) {
+    public void addNewItemToDB(String name, String type, String image) {
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-        jdbcTemplate.update("INSERT INTO item (item_name, item_type) VALUES (?,?)", name, type);
+        jdbcTemplate.update("INSERT INTO item (item_name, item_type, item_image) VALUES (?,?,?)", name, type, image);
     }
 
     public void deleteItemFromDB(String name) {
@@ -37,9 +37,9 @@ public class DataRepository {
         jdbcTemplate.update("DELETE FROM item WHERE item_name = ?", name);
     }
 
-    public void addNewRelicToDB(String name) {
+    public void addNewRelicToDB(String name, String image) {
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-        jdbcTemplate.update("INSERT INTO relic (relic_name) VALUES (?)", name);
+        jdbcTemplate.update("INSERT INTO relic (relic_name, relic_image) VALUES (?,?)", name, image);
     }
 
     public void deleteRelicFromDB(String name) {

@@ -54,6 +54,7 @@ public class RelicRepository {
 
     private static Relic asRelic(ResultSet resultset) throws SQLException {
         String relicName = resultset.getString("relic_name");
-        return new Relic(relicName);
+        String relicImage = resultset.getString("relic_image");
+        return new Relic(relicName, relicImage);
     }
 }

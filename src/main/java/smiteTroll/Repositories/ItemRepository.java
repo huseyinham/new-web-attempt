@@ -84,6 +84,7 @@ public class ItemRepository {
     private static Item asItem(ResultSet rs) throws SQLException {
         String itemName = rs.getString("item_name");
         String itemType = rs.getString("item_type");
-        return new Item(itemName, itemType);
+        String itemImage = rs.getString("item_image");
+        return new Item(itemName, itemType, itemImage);
     }
 }

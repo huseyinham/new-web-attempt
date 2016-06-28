@@ -65,7 +65,8 @@ public class GodRepositoryTest {
         private static God asGod(ResultSet rs) throws SQLException {
             String godName = rs.getString("god_name");
             String godType = rs.getString("god_type");
-            return new God(godName, godType);
+            String godImage= rs.getString("god_image");
+            return new God(godName, godType, godImage);
         }
     }
 }

@@ -116,6 +116,10 @@ public class IndexController {
         m.addAttribute("items", items);
         List<Relic> relics = sessions.getRelics();
         m.addAttribute("relics", relics);
+        m.addAttribute("godImage", god.getGodImage());
+        for(Item item : items){
+            m.addAttribute("itemImage", item.getItemImage());
+        }
     }
 
     private boolean outOfRerolls(Integer rerollAmount){

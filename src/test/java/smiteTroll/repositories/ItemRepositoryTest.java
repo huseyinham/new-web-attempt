@@ -16,8 +16,8 @@ public class ItemRepositoryTest {
 
     private ItemRepository itemRepo = new ItemRepository();
     private EmbeddedDatabase db;
-    private static final God physicalGod = new God("PhysicalGod", "physical");
-    private static final God magicalGod = new God("MagicalGod", "magical");
+    private static final God physicalGod = new God("PhysicalGod", "physical", "");
+    private static final God magicalGod = new God("MagicalGod", "magical", "");
 
     @Before
     public void setUp() {
