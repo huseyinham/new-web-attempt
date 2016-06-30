@@ -1,4 +1,4 @@
-package smiteTroll.runner;
+/*package smiteTroll.runner;
 
 import smiteTroll.classes.God;
 import smiteTroll.classes.Relic;
@@ -32,4 +32,4 @@ public class Runner {
             System.out.println(relic.getRelicName());
         }
     }
-}
+}*/

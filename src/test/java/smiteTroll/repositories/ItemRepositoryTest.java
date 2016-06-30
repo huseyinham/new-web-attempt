@@ -31,21 +31,21 @@ public class ItemRepositoryTest {
     @Test
     public void testingValidItemsForPhysicalGod() {
         createDbItemsForPhysicalTesting();
-        assertValidItemsForGod("physical");
+        assertValidItemsForGod(physicalGod);
         shutdown();
     }
 
     @Test
     public void testingValidItemsForMagicalGod() {
         createDbItemsForMagicalTesting();
-        assertValidItemsForGod("magical");
+        assertValidItemsForGod(magicalGod);
         shutdown();
     }
 
     @Test
     public void testingRerollWithPhysicalBoots() {
         createDbItemsForPhysicalTesting();
-        List<Item> itemList = itemRepo.getItems("physical");
+        List<Item> itemList = itemRepo.getItems(physicalGod);
         Item reRolledItem = itemList.get(0);
         Item newItem = itemRepo.reRoll(physicalGod, reRolledItem, itemList);
         Assert.assertTrue(!newItem.getItemName().equals(reRolledItem.getItemName()));
@@ -56,7 +56,7 @@ public class ItemRepositoryTest {
     @Test
     public void testingRerollWithMagicalBoots() {
         createDbItemsForMagicalTesting();
-        List<Item> itemList = itemRepo.getItems("magical");
+        List<Item> itemList = itemRepo.getItems(magicalGod);
         Item reRolledItem = itemList.get(0);
         Item newItem = itemRepo.reRoll(magicalGod, reRolledItem, itemList);
         Assert.assertTrue(!newItem.getItemName().equals(reRolledItem.getItemName()));
@@ -67,7 +67,7 @@ public class ItemRepositoryTest {
     @Test
     public void testingRerollWithPhysicalGod() {
         createDbItemsForPhysicalTesting();
-        List<Item> itemList = itemRepo.getItems("physical");
+        List<Item> itemList = itemRepo.getItems(physicalGod);
         Item reRolledItem = itemList.get(1);
         Item newItem = itemRepo.reRoll(physicalGod, reRolledItem, itemList);
         Assert.assertTrue(!newItem.getItemName().equals(reRolledItem.getItemName()));
@@ -78,7 +78,7 @@ public class ItemRepositoryTest {
     @Test
     public void testingRerollWithMagicalGod() {
         createDbItemsForMagicalTesting();
-        List<Item> itemList = itemRepo.getItems("magical");
+        List<Item> itemList = itemRepo.getItems(magicalGod);
         Item reRolledItem = itemList.get(1);
         Item newItem = itemRepo.reRoll(magicalGod, reRolledItem, itemList);
         Assert.assertTrue(!newItem.getItemName().equals(reRolledItem.getItemName()));
@@ -86,11 +86,11 @@ public class ItemRepositoryTest {
         shutdown();
     }
 
-    private void assertValidItemsForGod(String type) {
-        List<Item> itemList = itemRepo.getItems(type);
+    private void assertValidItemsForGod(God god) {
+        List<Item> itemList = itemRepo.getItems(god);
         for (Item item : itemList) {
             String actualResult = item.getItemType();
-            Assert.assertTrue(actualResult.equals(type) || actualResult.equals(type + "_boots") || actualResult.equals("neutral"));
+            Assert.assertTrue(actualResult.equals(god.getGodType()) || actualResult.equals(god.getGodType() + "_boots") || actualResult.equals("neutral"));
         }
     }
 

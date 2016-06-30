@@ -30,8 +30,12 @@
         <img class="god_image" src="${godImage}"/>
         
         <div class="item_images">
+            <c:set var="itemCount" value="0" scope="page"/>
             <c:forEach items="${items}" var="item">
-                <img class="item_image" src="${item.itemImage}"/>
+                <form action="itemReroll" method="POST" class="item_form_buttons">
+                    <input class="item_image" type="image" name="rerollIndex" src="${item.itemImage}" value="${itemCount}" />
+                </form>
+                <c:set var="itemCount" value="${itemCount + 1}" scope="page"/>
             </c:forEach>
         </div>
 
@@ -43,50 +47,6 @@
                     </c:forEach>
                 </ul>
             </div>
-
-            <div class="itembuttons">
-                <form action="itemReroll" method="POST" class="item_form_buttons">
-                    <input type="hidden" name="rerollIndex" value="0" />
-                    <button class="ibutton" type="submit"/>
-                        <span>Reroll</span>
-                    </button>
-                </form>
-
-                <form action="itemReroll" method="POST" class="item_form_buttons">
-                    <input type="hidden" name="rerollIndex" value="1" />
-                    <button class="ibutton" type="submit"/>
-                        <span>Reroll</span>
-                    </button>
-                </form>
-
-                <form action="itemReroll" method="POST" class="item_form_buttons">
-                    <input type="hidden" name="rerollIndex" value="2" />
-                    <button class="ibutton" type="submit"/>
-                        <span>Reroll</span>
-                    </button>
-                </form>
-
-                <form action="itemReroll" method="POST" class="item_form_buttons">
-                    <input type="hidden" name="rerollIndex" value="3" />
-                    <button class="ibutton" type="submit"/>
-                        <span>Reroll</span>
-                    </button>
-                </form>
-
-                <form action="itemReroll" method="POST" class="item_form_buttons">
-                    <input type="hidden" name="rerollIndex" value="4" />
-                    <button class="ibutton" type="submit"/>
-                        <span>Reroll</span>
-                    </button>
-                </form>
-
-                <form action="itemReroll" method="POST" class="item_form_buttons">
-                    <input type="hidden" name="rerollIndex" value="5" />
-                    <button class="ibutton" type="submit"/>
-                        <span>Reroll</span>
-                    </button>
-                </form>
-            </div>
         </div>
         
         <form action="godReroll" method="POST" class="godReroll">
@@ -96,8 +56,12 @@
         </form>
         
         <div class="relic_images">
+            <c:set var="relicCount" value="0" scope="page"/>
             <c:forEach items="${relics}" var="relic">
-                <img class="relic_image" src="${relic.relicImage}"/>
+                <form class="relicButton" action="relicReroll" method="POST">
+                    <input class="relic_image" type="image" name="rerollIndex" src="${relic.relicImage}" value="${relicCount}" />
+                    <c:set var="relicCount" value="${relicCount + 1}" scope="page"/>
+                </form>
             </c:forEach>
         </div>
 
@@ -108,22 +72,6 @@
                         <li><c:out value="${relic.relicName}" /></li>
                     </c:forEach>
                 </ul>
-            </div>
-
-            <div class="relicbuttons">
-                <form class="relicButton" action="relicReroll" method="POST">
-                    <input type="hidden" name="rerollIndex" value="0" />
-                    <button class ="rbutton" type="submit"/>
-                        <span>Reroll Relic One</span>
-                    </button>
-                </form>
-
-                <form class="relicButton" action="relicReroll" method="POST">
-                    <input type="hidden" name="rerollIndex" value="1" />
-                    <button class="rbutton" type="submit"/>
-                        <span>Reroll Relic Two</span>
-                    </button>
-                </form>
             </div>
         </div>
     </body>

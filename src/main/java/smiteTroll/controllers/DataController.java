@@ -1,4 +1,4 @@
-package smiteTroll.controller;
+package smiteTroll.controllers;
 
 
 import org.springframework.beans.factory.annotation.Autowired;

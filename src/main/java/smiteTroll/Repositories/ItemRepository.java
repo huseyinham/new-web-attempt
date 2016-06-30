@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import smiteTroll.classes.God;
 import smiteTroll.classes.Item;
+import smiteTroll.specials.SpecificItemsForGods;
 
 import javax.sql.DataSource;
 import java.sql.ResultSet;
@@ -23,10 +24,11 @@ public class ItemRepository {
         this.dataSource = dataSource;
     }
 
-    public List<Item> getItems(String godType) {
+    public List<Item> getItems(God god) {
         List<Item> itemList = new ArrayList();
-        itemList.add(getBootsItem(godType));
-        itemList.addAll(getRestOfItems(godType));
+        itemList.add(getBootsItem(god.getGodType()));
+        itemList.addAll(getRestOfItems(god.getGodType()));
+        new SpecificItemsForGods(god, itemList).checkUniqueCircumstance();
         return itemList;
     }
 
@@ -63,6 +65,15 @@ public class ItemRepository {
     private List<Item> getRestOfItems(String type) {
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         return jdbcTemplate.query("SELECT * FROM item WHERE item_type = ? OR item_type = ? ORDER BY RAND() LIMIT 5", new Object[]{type, "neutral"}, new ItemListRowMapExtractor());
+    }
+
+    public List<Item> checkForSpecificItemsForGods(God god, List<Item> items) {
+        Item firstItem = items.get(0);
+        if (firstItem.getItemName().equals("Acorn of Yggdrasil")) {
+            Item newFirstItem = reRoll(god, firstItem, items);
+            items.set(0, newFirstItem);
+        }
+        return items;
     }
 
     private static class ItemListRowMapExtractor implements RowMapper<Item> {

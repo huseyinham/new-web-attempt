@@ -1,4 +1,4 @@
-package smiteTroll.controller;
+package smiteTroll.controllers;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,6 @@ import smiteTroll.classes.Relic;
 import smiteTroll.repositories.GodRepository;
 import smiteTroll.repositories.ItemRepository;
 import smiteTroll.repositories.RelicRepository;
-import smiteTroll.specials.SpecificItemsForGods;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -23,11 +22,11 @@ import java.util.List;
 public class IndexController {
 
     @Autowired
-    private GodRepository godRepository;
+    protected GodRepository godRepository;
     @Autowired
-    private ItemRepository itemRepository;
+    protected ItemRepository itemRepository;
     @Autowired
-    private RelicRepository relicRepository;
+    protected RelicRepository relicRepository;
 
     private Integer rerollAmount = 3;
 
@@ -39,82 +38,79 @@ public class IndexController {
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public String handleIndex(Model m, HttpSession session) {
         rerollAmount = 3;
-        Sessions sessions = new Sessions(session, rerollAmount);
-        sessions.setRerollAmount(rerollAmount);
+        Sessions sessions = new Sessions(session);
+
         God god = godRepository.getNewGod();
-        List<Item> items = itemRepository.getItems(god.getGodType());
-        new SpecificItemsForGods(god, items).checkUniqueCircumstance();
-        sessions.setItems(items);
+        List<Item> items = itemRepository.getItems(god);
         List<Relic> relics = relicRepository.getRelics();
+
+        sessions.setCurrentGod(god);
+        sessions.setItems(items);
         sessions.setRelics(relics);
-        getBuildForGod(m, sessions, god);
+        sessions.setRerollAmount(rerollAmount);
+
+        populateModel(m, sessions);
         return "index";
     }
 
     @RequestMapping(value = "/godReroll", method = RequestMethod.POST)
     public String handleGodRerolls(Model m, HttpSession session) {
-        Sessions sessions = new Sessions(session, rerollAmount);
-        sessions.setRerollAmount(rerollAmount);
-        if (outOfRerolls(sessions.getRerollAmount())) {
-            getBuildForGod(m, sessions, sessions.getCurrentGod());
-            return "index";
-        }
+        Sessions sessions = new Sessions(session);
+        if (checkRerollAmount(m, sessions)) return "index";
+
         God god = godRepository.reRoll(sessions.getCurrentGod());
         rerollAmount --;
+
+        sessions.setCurrentGod(god);
+        sessions.setItems(itemRepository.checkForSpecificItemsForGods(god, sessions.getItems()));
         sessions.setRerollAmount(rerollAmount);
-        new SpecificItemsForGods(god, sessions.getItems()).checkUniqueCircumstance();
-        if (sessions.getCurrentGod().getGodName().equals("Ratatoskr")){
-            List<Item> items = sessions.getItems();
-            Item item = itemRepository.reRoll(sessions.getCurrentGod(),items.get(0),sessions.getItems());
-            items.set(0, item);
-            sessions.setItems(items);
-        }
-        getBuildForGod(m, sessions, god);
+
+        populateModel(m, sessions);
         return "index";
     }
 
     @RequestMapping(value = "/itemReroll", method = RequestMethod.POST)
     public String handleItemRerolls(Model m, HttpSession session, HttpServletRequest request) {
-        Sessions sessions = new Sessions(session, rerollAmount);
-        sessions.setRerollAmount(rerollAmount);
-        if (outOfRerolls(sessions.getRerollAmount())) {
-            getBuildForGod(m, sessions, sessions.getCurrentGod());
-            return "index";
-        }
+        Sessions sessions = new Sessions(session);
+        if (checkRerollAmount(m, sessions)) return "index";
+
         int index = Integer.parseInt(request.getParameter("rerollIndex"));
         List<Item> items = sessions.getItems();
         Item item = itemRepository.reRoll(sessions.getCurrentGod(), items.get(index),sessions.getItems());
-        rerollAmount --;
         items.set(index, item);
+        rerollAmount --;
+
         sessions.setItems(items);
-        getBuildForGod(m, sessions, sessions.getCurrentGod());
+        sessions.setRerollAmount(rerollAmount);
+
+        populateModel(m, sessions);
         return "index";
     }
 
     @RequestMapping(value = "/relicReroll", method = RequestMethod.POST)
     public String handleRelicOneRerolls(Model m, HttpSession session, HttpServletRequest request) {
-        Sessions sessions = new Sessions(session, rerollAmount);
-        sessions.setRerollAmount(rerollAmount);
-        if (outOfRerolls(sessions.getRerollAmount())) {
-            getBuildForGod(m, sessions, sessions.getCurrentGod());
-            return "index";
-        }
+        Sessions sessions = new Sessions(session);
+        if (checkRerollAmount(m, sessions)) return "index";
+
         int index = Integer.parseInt(request.getParameter("rerollIndex"));
         List<Relic> relics = sessions.getRelics();
         Relic relic = relicRepository.reRollRelic(relics);
-        rerollAmount --;
         relics.set(index, relic);
+        rerollAmount --;
+
         sessions.setRelics(relics);
-        getBuildForGod(m, sessions, sessions.getCurrentGod());
+        sessions.setRerollAmount(rerollAmount);
+
+        populateModel(m, sessions);
         return "index";
     }
 
-    private void getBuildForGod(Model m, Sessions sessions, God god) {
-        sessions.setCurrentGod(god);
-        m.addAttribute("godName", god.getGodName());
+    private void populateModel(Model m, Sessions sessions) {
+        God god = sessions.getCurrentGod();
         List<Item> items = sessions.getItems();
-        m.addAttribute("items", items);
         List<Relic> relics = sessions.getRelics();
+        m.addAttribute("godName", god.getGodName());
+        m.addAttribute("items", items);
         m.addAttribute("relics", relics);
         m.addAttribute("godImage", god.getGodImage());
         for(Item item : items){
@@ -122,8 +118,12 @@ public class IndexController {
         }
     }
 
-    private boolean outOfRerolls(Integer rerollAmount){
-        return rerollAmount == 0;
+    private boolean checkRerollAmount(Model m, Sessions sessions) {
+        if (rerollAmount == 0) {
+            populateModel(m, sessions);
+            return true;
+        }
+        return false;
     }
 
     @RequestMapping(value = "/godReroll", method = RequestMethod.GET)
@@ -140,5 +140,4 @@ public class IndexController {
     public String handleRefreshRelicOne(Model m, HttpSession session) {
         return handleIndex(m, session);
     }
-
 }

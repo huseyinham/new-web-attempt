@@ -1,4 +1,4 @@
-package smiteTroll.controller;
+package smiteTroll.controllers;
 
 import smiteTroll.classes.God;
 import smiteTroll.classes.Item;
@@ -10,11 +10,9 @@ import java.util.List;
 public class Sessions {
 
     private HttpSession session;
-    private Integer rerollAmount = 3;
 
-    public Sessions(HttpSession session, int rerollAmount) {
+    public Sessions(HttpSession session) {
         this.session = session;
-        this.rerollAmount = rerollAmount;
     }
 
     //Gods
