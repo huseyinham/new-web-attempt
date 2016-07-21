@@ -1,4 +1,4 @@
-package smiteTroll.exceptions;
+package smiteTroll.Exceptions;
 
 public class ModifyDatabaseException extends RuntimeException {
 
