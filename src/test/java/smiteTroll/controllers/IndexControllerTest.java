@@ -93,7 +93,6 @@ public class IndexControllerTest {
     public void testItemAttributesHaveBeenAddedToModelOnIndex() {
         indexController.handleIndex(model, session);
         assertEquals(items, model.asMap().get("items"));
-        System.out.println("hi" + model.asMap().get("itemImage"));
         assertEquals("", model.asMap().get("itemImage"));
     }
 
