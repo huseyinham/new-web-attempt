@@ -15,6 +15,7 @@
 
     <mvc:annotation-driven />
     <context:component-scan base-package="smiteTroll" />
+    <context:property-placeholder location="classpath:jdbc.properties" />
 
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/views/" />
@@ -27,13 +28,12 @@
     <bean id="dataRepository" class="smiteTroll.repositories.DataRepository"/>
 
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
-        <property name="url" value="jdbc:mysql://localhost:3306/new_web_attempt" />
-        <property name="username" value="root" />
-        <property name="password" value="1234" />
+        <property name="driverClassName" value="${jdbc.driver}" />
+        <property name="url" value="${jdbc.url}" />
+        <property name="username" value="${jdbc.username}" />
+        <property name="password" value="${jdbc.password}" />
     </bean>
 
     <mvc:resources mapping="/resources/**" location="/resources/"
                    cache-period="31556926"/>
-
 </beans>
